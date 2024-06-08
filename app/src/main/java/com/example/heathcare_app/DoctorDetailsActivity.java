@@ -3,7 +3,9 @@ package com.example.heathcare_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -130,6 +132,24 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
 
         }
-//        sa = new SimpleAdapter(this, )
+        sa = new SimpleAdapter(this,list, R.layout.multi_lines, new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.line_a, R.id.line_b,R.id.line_c,R.id.line_d,R.id.line_e});
+        ListView lst = findViewById(R.id.listViewDD);
+        lst.setAdapter(sa);
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                Intent it = new Intent(DoctorDetailsActivity.this, BookAppointmentActivity.class);
+                it.putExtra("text1", title);
+                it.putExtra("text2", doctor_details[i][0]);
+                it.putExtra("text3", doctor_details[i][1]);
+                it.putExtra("text4", doctor_details[i][2]);
+                it.putExtra("text5", doctor_details[i][3]);
+                it.putExtra("text6", doctor_details[i][4]);
+                startActivity(it);
+
+
+            }
+        });
+
     }
 }
