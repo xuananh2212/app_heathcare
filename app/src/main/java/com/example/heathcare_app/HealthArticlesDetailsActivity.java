@@ -18,7 +18,6 @@ public class HealthArticlesDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_articles_details);
-
         articleImage = findViewById(R.id.articleImage);
         articleTitle = findViewById(R.id.articleTitle);
         articleDescription = findViewById(R.id.articleDescription);
