@@ -1,24 +1,35 @@
 package com.example.heathcare_app;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuyMedicineActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private ProductAdapter productAdapter;
+    private List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_buy_medicine);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        // Tạo dữ liệu mẫu
+        productList = new ArrayList<>();
+        productList.add(new Product(1,"Product 1", 123, 111, "https://picsum.photos/200"));
+        productList.add(new Product(2,"Product 2", 150, 120, "https://picsum.photos/200"));
+        productList.add(new Product(3,"Product 3", 123, 111, "https://picsum.photos/200"));
+        productList.add(new Product(4,"Product 4", 150, 120, "https://picsum.photos/200"));
+        productList.add(new Product(5,"Product 5", 123, 111, "https://picsum.photos/200"));
+        productAdapter = new ProductAdapter(this, productList);
+        recyclerView.setAdapter(productAdapter);
     }
 }

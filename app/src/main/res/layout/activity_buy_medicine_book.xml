@@ -1,10 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyMedicineBookActivity">
+    android:layout_marginTop="8dp"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/health1" />
+
+        <TextView
+            android:id="@+id/productTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Product Title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="JMsolution Marine Luminous Pearl Deep Moisture Mask là bộ sản phẩm chăm sóc cho da bao gồm: Step 1 - Marine waterfull essence: Tinh chất tăng cường dưỡng ẩm cho da. Step 2 – Marine Luminous Mask: Mặt nạ dưỡng ẩm và dưỡng trắng. Step 3 – Marine All Face Eye Cream: Kem dưỡng quanh vùng mắt."
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar2"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:indeterminate="false"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="#ffc106"
+            android:rating="4"
+            android:stepSize="0.1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/productOldPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Old Price"
+                android:textColor="#808080"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/productNewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Price"
+                android:textColor="#404040"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/purple_500"
+            android:text="Mua hàng"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</ScrollView>

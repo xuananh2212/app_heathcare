@@ -26,6 +26,21 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        CardView buyMedicine = findViewById(R.id.cardBuyMedicine);
+        buyMedicine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, BuyMedicineActivity.class));
+            }
+        });
+
+        CardView healthArticles = findViewById(R.id.cardHealthDoctor);
+        healthArticles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, HealthArticlesActivity.class));
+            }
+        });
         // start goi db
         SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "").toString();
