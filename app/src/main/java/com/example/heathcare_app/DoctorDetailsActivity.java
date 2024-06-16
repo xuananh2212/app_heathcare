@@ -122,6 +122,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         });
         list = new ArrayList();
         for (int i = 0 ; i < doctor_details.length ; i++ ){
+            System.out.println(doctor_details[i][0]);
             item = new HashMap<String, String>();
             item.put("line1", doctor_details[i][0]);
             item.put("line2", doctor_details[i][1]);
@@ -129,9 +130,8 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             item.put("line4", doctor_details[i][3]);
             item.put("line5", "Cons Fees: " + doctor_details[i][4] + "/-");
             list.add(item);
-
-
         }
+        System.out.println(list);
         sa = new SimpleAdapter(this,list, R.layout.multi_lines, new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.line_a, R.id.line_b,R.id.line_c,R.id.line_d,R.id.line_e});
         ListView lst = findViewById(R.id.listViewDD);
         lst.setAdapter(sa);

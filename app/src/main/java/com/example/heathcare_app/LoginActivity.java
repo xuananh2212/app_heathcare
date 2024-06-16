@@ -56,47 +56,49 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = textUserName.getText().toString();
-                String password = textPassword.getText().toString();
-                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
-                if(username.length() ==0 || password.length() == 0){
-                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
-                } else{
-                    // start dangnhap voi tk cho san
-//                    boolean isAuthenticated = false;
-//                    for (Acount account : acounts) {
-//                        if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
-//                            isAuthenticated = true;
-//                            break;
-//                        }
-//                    }
-//                    if (isAuthenticated) {
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                String username = textUserName.getText().toString();
+//                String password = textPassword.getText().toString();
+//                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
+//                if(username.length() ==0 || password.length() == 0){
+//                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
+//                } else{
+//                    // start dangnhap voi tk cho san
+////                    boolean isAuthenticated = false;
+////                    for (Acount account : acounts) {
+////                        if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
+////                            isAuthenticated = true;
+////                            break;
+////                        }
+////                    }
+////                    if (isAuthenticated) {
+////                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+////                    } else {
+////                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+////                    }
+//                    // end dangnhap voi tk cho san
+//                    // start dangnhap voi db
+//                    if(db.login(username,password) == 1){
+//                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+//                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("username",username);
+//                        editor.apply();
 //                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
 //                    }
-                    // end dangnhap voi tk cho san
-                    // start dangnhap voi db
-                    if(db.login(username,password) == 1){
-                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username",username);
-                        editor.apply();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                //end dangnhap voi db
-//                if (username.equals(acount1.getUsername()) && password.equals(acount1.getPassword())){
-//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
 //                }
+//
+//                //end dangnhap voi db
+////                if (username.equals(acount1.getUsername()) && password.equals(acount1.getPassword())){
+////                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+////                } else {
+////                    Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+////                }
 
             }
+
         });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
