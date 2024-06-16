@@ -22,7 +22,6 @@ public class HealthArticlesDetailsActivity extends AppCompatActivity {
         articleTitle = findViewById(R.id.articleTitle);
         articleDescription = findViewById(R.id.articleDescription);
         articleContent = findViewById(R.id.articleContent);
-
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");

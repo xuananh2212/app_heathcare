@@ -25,8 +25,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText textUserName, textPassword, textEmail, textConfirmPassword;
-    TextView login;
+    EditText textFullName, textPassword, textEmail, textConfirmPassword;
+    TextView linkLogin;
     Button btnRegister;
 
     @Override
@@ -39,18 +39,18 @@ public class RegisterActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        textUserName = findViewById(R.id.textUserName);
+        textFullName = findViewById(R.id.textFullName);
         textPassword = findViewById(R.id.textPassword);
         textEmail = findViewById(R.id.textEmail);
         textConfirmPassword = findViewById(R.id.textConfirmPassword);
-        login = findViewById(R.id.titleAlreadyHaveAcount);
+        linkLogin = findViewById(R.id.linkLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String username = textUserName.getText().toString();
+                String username = textFullName.getText().toString();
                 String email = textEmail.getText().toString();
                 String password = textPassword.getText().toString();
                 String confirmpassword = textConfirmPassword.getText().toString();
@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-        login.setOnClickListener(new View.OnClickListener() {
+        linkLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
