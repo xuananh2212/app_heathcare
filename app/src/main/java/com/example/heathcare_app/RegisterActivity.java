@@ -14,6 +14,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.SignupResponse;
+import com.example.heathcare_app.model.User;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegisterActivity extends AppCompatActivity {
     EditText textUserName, textPassword, textEmail, textConfirmPassword;
     TextView login;
@@ -37,13 +47,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String username = textUserName.getText().toString();
                 String email = textEmail.getText().toString();
                 String password = textPassword.getText().toString();
                 String confirmpassword = textConfirmPassword.getText().toString();
-                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
+//                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
                 if (username.length() == 0 || email.length() == 0 || password.length() == 0 || confirmpassword.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
@@ -51,9 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
                     if(isValidEmail(email)){
                         if (password.equals(confirmpassword)) {
                             if (isValid(password)) {
-                                db.register(username,email,password);
-                                Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//                                db.register(username,email,password);
+                                User user = new User(username, password, email);
+                                callApiSignUp(user);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Password must contain at least 8 character,having leter, digit and special character", Toast.LENGTH_SHORT).show();
                             }
@@ -71,6 +82,28 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
+    }
+    private void callApiSignUp(User user){
+        Call<SignupResponse> call = ApiService.apiService.signup(user);
+        call.enqueue(new Callback<SignupResponse>() {
+            @Override
+            public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+                if (response.isSuccessful()) {
+                    SignupResponse signupResponse = response.body();
+                    Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    System.out.println("Signup successful: " + signupResponse.getMessage());
+                } else {
+                    System.out.println("Signup failed: " + response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignupResponse> call, Throwable t) {
+                t.printStackTrace();
+                System.out.println(1);
             }
         });
     }
