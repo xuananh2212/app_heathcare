@@ -9,11 +9,15 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorPrimaryDark">#3262C4</color>
+    <color name="my_primary">#5E35B1</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFFFF</color>
 
     <color name="colorRed">#C11515</color>
     <color name="purpleDark">#FF210642</color>
     <color name="yellowLight">#FFF777</color>
-
+    <color name="border_edittext">#bdbdbd</color>
+    <color name="btn_login">#1976D2</color>
+    <color name="link_register">#1e88e5</color>
+    <color name="your_action_bar_color">#FF5722</color>
 </resources>

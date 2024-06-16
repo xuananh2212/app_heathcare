@@ -21,8 +21,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText textUserName,textPassword;
-    TextView register;
+    EditText textEmail,textPassword;
+    TextView linkRegister;
     Button btnLogin;
 //    Acount acount1 = new Acount("datnv","123");
 //    Acount acount2 = new Acount("xuanhanhnx","123");
@@ -49,58 +49,56 @@ public class LoginActivity extends AppCompatActivity {
         acounts.add((acount2));
         acounts.add((acount3));
         // end tao tai khoan de danhnhap thu cong
-        textUserName = findViewById(R.id.textUserName);
+        textEmail = findViewById(R.id.textEmail);
         textPassword = findViewById(R.id.textPassword);
-        register = findViewById(R.id.titleRegisterNewUser);
+        linkRegister = findViewById(R.id.linkRegister);
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                String username = textUserName.getText().toString();
-//                String password = textPassword.getText().toString();
-//                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
-//                if(username.length() ==0 || password.length() == 0){
-//                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
-//                } else{
-//                    // start dangnhap voi tk cho san
-////                    boolean isAuthenticated = false;
-////                    for (Acount account : acounts) {
-////                        if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
-////                            isAuthenticated = true;
-////                            break;
-////                        }
-////                    }
-////                    if (isAuthenticated) {
-////                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-////                    } else {
-////                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-////                    }
-//                    // end dangnhap voi tk cho san
-//                    // start dangnhap voi db
-//                    if(db.login(username,password) == 1){
-//                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-//                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("username",username);
-//                        editor.apply();
+                String username = textEmail.getText().toString();
+                String password = textPassword.getText().toString();
+                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
+                if(username.length() ==0 || password.length() == 0){
+                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
+                } else{
+                    // start dangnhap voi tk cho san
+//                    boolean isAuthenticated = false;
+//                    for (Acount account : acounts) {
+//                        if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
+//                            isAuthenticated = true;
+//                            break;
+//                        }
+//                    }
+//                    if (isAuthenticated) {
 //                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
 //                    }
+                    // end dangnhap voi tk cho san
+                    // start dangnhap voi db
+                    if(db.login(username,password) == 1){
+                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username",username);
+                        editor.apply();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                //end dangnhap voi db
+//                if (username.equals(acount1.getUsername()) && password.equals(acount1.getPassword())){
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
 //                }
-//
-//                //end dangnhap voi db
-////                if (username.equals(acount1.getUsername()) && password.equals(acount1.getPassword())){
-////                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-////                } else {
-////                    Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-////                }
 
             }
-
         });
-        register.setOnClickListener(new View.OnClickListener() {
+        linkRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
