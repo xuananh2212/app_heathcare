@@ -2,6 +2,7 @@ package com.example.heathcare_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.ErrorSignupResponse;
 import com.example.heathcare_app.model.SignupResponse;
 import com.example.heathcare_app.model.User;
 
@@ -90,20 +92,27 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     SignupResponse signupResponse = response.body();
-                    Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    System.out.println("Signup successful: " + signupResponse.getMessage());
+//                    Log.e("responseapi", "onResponse: " + signupResponse);
+//                    Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
+                    Log.d("responseapi", signupResponse.getMessage());
+//                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//                    System.out.println("Signup successful: " + signupResponse.getMessage());
                 } else {
-                    System.out.println("Signup failed: " + response.errorBody().toString());
+//                    ErrorSignupResponse errorSignupResponse = response.body();
+//                    Log.d("responseapi", errorSignupResponse.getMessage());
+
+//                    Toast.makeText(getApplicationContext(),"Register failed",Toast.LENGTH_SHORT).show();
+//                    System.out.println("Signup failed: " + response.errorBody().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<SignupResponse> call, Throwable t) {
                 t.printStackTrace();
-                System.out.println(1);
+                System.out.println("Call Api lỗi");
+                Toast.makeText(getApplicationContext(),"Call Api Lỗi",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,9 +1,17 @@
 package com.example.heathcare_app.model;
-public class SignupResponse {
+
+public class LoginResponse {
     private String message;
     private int status;
     private Metadata metadata;
     private Options options;
+
+    public LoginResponse(String message, int status, Metadata metadata, Options options) {
+        this.message = message;
+        this.status = status;
+        this.metadata = metadata;
+        this.options = options;
+    }
 
     // Getters and Setters
     public String getMessage() {
