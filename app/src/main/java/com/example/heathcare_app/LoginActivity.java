@@ -123,14 +123,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    Log.e("responseapi", "onResponse: " + signupResponse);
 //                    Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
                     Log.d("responseapi", loginResponse.getMessage());
 //                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
 //                    System.out.println("Signup successful: " + signupResponse.getMessage());
                 } else {
-                    LoginResponse loginResponse = response.body();
-                    Log.d("responseapi", loginResponse.getMessage());
+                    Toast.makeText(getApplicationContext(),"Signup failed",Toast.LENGTH_SHORT).show();
+//                    LoginResponse loginResponse = response.body();
+//                    Log.d("responseapi", loginResponse.getMessage());
 
 //                    ErrorSignupResponse errorSignupResponse = response.body();
 //                    Log.d("responseapi", errorSignupResponse.getMessage());
