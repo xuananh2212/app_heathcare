@@ -1,5 +1,7 @@
 package com.example.heathcare_app.api;
 
+import com.example.heathcare_app.model.Article;
+import com.example.heathcare_app.model.ArticleResponse;
 import com.example.heathcare_app.model.LoginResponse;
 import com.example.heathcare_app.model.SignupResponse;
 import com.example.heathcare_app.model.User;
@@ -27,4 +29,6 @@ public interface ApiService {
     Call<LoginResponse> login(@Body User user);
     @GET("users")
     Call<List<User>> getListUser();
+    @GET("articles")
+    Call<ArticleResponse> getArticles();
 }

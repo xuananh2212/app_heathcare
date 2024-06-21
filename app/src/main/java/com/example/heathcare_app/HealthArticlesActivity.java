@@ -2,20 +2,29 @@ package com.example.heathcare_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.Article;
+import com.example.heathcare_app.model.ArticleResponse;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HealthArticlesActivity extends AppCompatActivity {
 
     private ListView articleListView;
-    private List<HealthArticle> articleList;
-    private HealthArticleAdapter adapter;
+    private List<Article> articleList;
+    private HealthArticleAdapter articleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,25 +32,43 @@ public class HealthArticlesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_health_articles);
 
         articleListView = findViewById(R.id.articleListView);
-
-        articleList = new ArrayList<>();
-        articleList.add(new HealthArticle("Bài báo 1", "Mô tả bài báo 1", "https://picsum.photos/200", "Nội dung bài báo 1"));
-        articleList.add(new HealthArticle("Bài báo 2", "Mô tả bài báo 2", "https://picsum.photos/200", "Nội dung bài báo 2"));
-        // Thêm nhiều bài báo khác vào articleList...
-
-        adapter = new HealthArticleAdapter(this, articleList);
-        articleListView.setAdapter(adapter);
-
+        fetchArticles();
         articleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HealthArticle selectedArticle = articleList.get(position);
+                Article selectedArticle = articleList.get(position);
                 Intent intent = new Intent(HealthArticlesActivity.this, HealthArticlesDetailsActivity.class);
                 intent.putExtra("title", selectedArticle.getTitle());
                 intent.putExtra("description", selectedArticle.getDescription());
-                intent.putExtra("imageUrl", selectedArticle.getImageUrl());
+                intent.putExtra("imageUrl", selectedArticle.getImage());
                 intent.putExtra("content", selectedArticle.getContent());
                 startActivity(intent);
+            }
+        });
+    }
+    private void fetchArticles() {
+        Call<ArticleResponse> call = ApiService.apiService.getArticles();
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+                if (response.isSuccessful()) { // Đây là phương thức kiểm tra response code
+                    ArticleResponse apiResponse = response.body();
+                    if (apiResponse != null && apiResponse.getData() != null) {
+                        List<Article> articles = apiResponse.getData().getArticles();
+                        articleList = new ArrayList<>();
+                        articleList.addAll(articles);
+                        articleAdapter = new HealthArticleAdapter(HealthArticlesActivity.this, articleList);
+                        articleListView.setAdapter(articleAdapter);
+                    }
+                } else {
+                    // Xử lý lỗi từ server
+                    Log.e("MainActivity", "Server Error");
+                }
+            }
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                t.printStackTrace();
+                // Handle network error
             }
         });
     }
