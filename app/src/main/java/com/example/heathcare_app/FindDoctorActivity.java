@@ -36,7 +36,8 @@ public class FindDoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(FindDoctorActivity.this, DoctorDetailsActivity.class);
-                it.putExtra("title", "Family Physicians");
+                it.putExtra("title", "Nhóm bác sĩ gia đình");
+                it.putExtra("id", "1");
                 startActivity(it);
             }
         });
@@ -46,7 +47,8 @@ public class FindDoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(FindDoctorActivity.this, DoctorDetailsActivity.class);
-                it.putExtra("title", "Dietician");
+                it.putExtra("title", "Chuyên gia dinh dưỡng");
+                it.putExtra("id", "2");
                 startActivity(it);
             }
         });
@@ -55,7 +57,8 @@ public class FindDoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(FindDoctorActivity.this, DoctorDetailsActivity.class);
-                it.putExtra("title", "Dentist");
+                it.putExtra("title", "Nha sĩ");
+                it.putExtra("id", "3");
                 startActivity(it);
             }
         });
@@ -64,7 +67,8 @@ public class FindDoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(FindDoctorActivity.this, DoctorDetailsActivity.class);
-                it.putExtra("title", "Surgeon");
+                it.putExtra("title", "Bác sĩ phẫu thuật");
+                it.putExtra("id", "4");
                 startActivity(it);
             }
         });
@@ -74,7 +78,8 @@ public class FindDoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(FindDoctorActivity.this, DoctorDetailsActivity.class);
-                it.putExtra("title", "Cardiologists");
+                it.putExtra("title", "Bác sĩ tim mạch");
+                it.putExtra("id", "5");
                 startActivity(it);
             }
         });
