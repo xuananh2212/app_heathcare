@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,14 +20,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.heathcare_app.api.ApiResponseBookAppointment;
+import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.BookAppointment;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookAppointmentActivity extends AppCompatActivity {
     EditText ed1, ed2, ed3,ed4;
     TextView tv;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    private Button dateButton, timeButton,btnBook, btnBack ;
+    private TimePickerDialog timePickerDialogEnd;
+    private Button dateButton, timeButton,timeButtonEnd ,btnBook, btnBack ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         ed4 = findViewById(R.id.editTextAppFees);
         dateButton = findViewById(R.id.buttonAppDate);
         timeButton = findViewById(R.id.buttonAppTime);
+        timeButtonEnd = findViewById(R.id.buttonAppTimeEnd);
         btnBook =findViewById(R.id.buttonBookAppointment);
         btnBack= findViewById(R.id.buttonAppBack);
 
@@ -58,7 +72,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         String address = it.getStringExtra("text3");
         String contact = it.getStringExtra("text4");
         String fees = it.getStringExtra("text5");
-
+        String id = it.getStringExtra("text7");
         tv.setText(title);
         ed1.setText(fullname);
         ed2.setText(address);
@@ -76,10 +90,17 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
         // timePicker
         initTimePicker();
+        initTimePickerEnd();
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timePickerDialog.show();
+            }
+        });
+        timeButtonEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialogEnd.show();
             }
         });
 
@@ -93,12 +114,57 @@ public class BookAppointmentActivity extends AppCompatActivity {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String selectedDate = dateButton.getText().toString();
+                String selectedTime = timeButton.getText().toString();
+                String selectedTimeEnd = timeButtonEnd.getText().toString();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String startTimeStr = selectedDate + " " + selectedTime;
+                String endTimeStr = selectedDate + " " + selectedTimeEnd;
+                try {
+                    Date startTime  = dateFormat.parse(startTimeStr);
+                    Date endTime = dateFormat.parse(endTimeStr);
+                    BookAppointment bookAppointment = new BookAppointment(7, Integer.parseInt(id), new Date(), new Date());
+                    callApiAddBookAppointments(bookAppointment);
+
+                }catch (ParseException e){
+                    e.printStackTrace();
+                    Toast.makeText(BookAppointmentActivity.this, "Invalid date or time format", Toast.LENGTH_SHORT).show();
+                } catch (java.text.ParseException e) {
+                    throw new RuntimeException(e);
+                }
+//                catch (java.text.ParseException e) {
+//
+//                    throw new RuntimeException(e);
+//                }
+
 
             }
         });
 
 
 
+    }
+    private void callApiAddBookAppointments(BookAppointment bookAppointment){
+        Call<ApiResponseBookAppointment> call  = ApiService.apiService.handleBookAppointments(bookAppointment);
+        call.enqueue(new Callback<ApiResponseBookAppointment>() {
+            @Override
+            public void onResponse(Call<ApiResponseBookAppointment> call, Response<ApiResponseBookAppointment> response) {
+                if (response.isSuccessful()) {
+                    ApiResponseBookAppointment apiResponse = response.body();
+                    if(apiResponse.getStatus() == 201){
+                        Toast.makeText(BookAppointmentActivity.this , "Đặt lịch thành công",Toast.LENGTH_SHORT ).show();
+                    }
+                } else {
+                   Toast.makeText(BookAppointmentActivity.this , "Response error",Toast.LENGTH_SHORT ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponseBookAppointment> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(BookAppointmentActivity.this , " Failure",Toast.LENGTH_SHORT ).show();
+            }
+        });
     }
     private void initDatePicker(){
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
@@ -136,4 +202,21 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
 
     };
+    private void initTimePickerEnd(){
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timeButtonEnd.setText(hourOfDay + ":" + minute);
+            }
+        };
+        Calendar cal = Calendar.getInstance();
+        int hrs = cal.get(Calendar.HOUR);
+        int mins  = cal.get(Calendar.MINUTE);
+        int style = AlertDialog.THEME_HOLO_DARK;
+        timePickerDialogEnd = new TimePickerDialog(this, style, timeSetListener, hrs, mins , true);
+
+
+
+    };
 }
+
