@@ -56,5 +56,17 @@ public class Metadata {
         public void setUpdatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
         }
+
+    @Override
+    public String toString() {
+        return "Metadata{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                '}';
     }
+}
 

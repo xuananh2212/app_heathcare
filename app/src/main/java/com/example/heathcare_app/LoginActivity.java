@@ -18,7 +18,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.ApiResponse;
 import com.example.heathcare_app.model.LoginResponse;
+import com.example.heathcare_app.model.Metadata;
+import com.example.heathcare_app.model.SharedPrefManager;
 import com.example.heathcare_app.model.SignupResponse;
 import com.example.heathcare_app.model.User;
 
@@ -48,15 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // start tao tk de dangnhap thu cong
-//        Acount acount1 = new Acount("datnv","123");
-//        Acount acount2 = new Acount("tuananhnx","123");
-//        Acount acount3 = new Acount("thend","123");
-//        ArrayList<Acount> acounts = new ArrayList<>();
-//        acounts.add((acount1));
-//        acounts.add((acount2));
-//        acounts.add((acount3));
-        // end tao tai khoan de danhnhap thu cong
         textEmail = findViewById(R.id.textEmail);
         textPassword = findViewById(R.id.textPassword);
         linkRegister = findViewById(R.id.linkRegister);
@@ -66,45 +60,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = textEmail.getText().toString();
                 String password = textPassword.getText().toString();
-//                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
                 if (email.length() == 0 || password.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
                 } else {
-                    // start dangnhap voi tk cho san
-//                    boolean isAuthenticated = false;
-//                    for (Acount account : acounts) {
-//                        if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
-//                            isAuthenticated = true;
-//                            break;
-//                        }
-//                    }
-//                    if (isAuthenticated) {
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-//                    }
-                    // end dangnhap voi tk cho san
-                    // start dangnhap voi db
-//                    if(db.login(username,password) == 1){
-//                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-//                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("username",username);
-//                        editor.apply();
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-//                    }
+                    User user = new User(password, email);
+                    callApiLogin(user);
                 }
-
-                //end dangnhap voi db
-//                if (username.equals(acount1.getUsername()) && password.equals(acount1.getPassword())){
-//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-//                }
-                User user = new User(password, email);
-                callApiLogin(user);
 
             }
         });
@@ -117,35 +78,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void callApiLogin(User user) {
-        Call<LoginResponse> call = ApiService.apiService.login(user);
-        call.enqueue(new Callback<LoginResponse>() {
+        Call<ApiResponse<Metadata>> call = ApiService.apiService.login(user);
+        call.enqueue(new Callback<ApiResponse<Metadata>>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<ApiResponse<Metadata>> call, Response<ApiResponse<Metadata>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse loginResponse = response.body();
+                    ApiResponse<Metadata> loginResponse = response.body();
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    Log.e("responseapi", "onResponse: " + signupResponse);
-//                    Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
                     Log.d("responseapi", loginResponse.getMessage());
-//                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-//                    System.out.println("Signup successful: " + signupResponse.getMessage());
+                    Metadata metadata = loginResponse.getData();
+                    Log.d("responseapi", metadata.toString());
+                    int id = metadata.getId();
+                    SharedPrefManager.getInstance(LoginActivity.this).saveString("id",Integer.toString(id));
+                String strId =   SharedPrefManager.getInstance(LoginActivity.this).getString("id","null");
+                    Log.d("responseapi", strId);
+
                 } else {
                     Toast.makeText(getApplicationContext(),"Signup failed",Toast.LENGTH_SHORT).show();
-//                    LoginResponse loginResponse = response.body();
-//                    Log.d("responseapi", loginResponse.getMessage());
-
-//                    ErrorSignupResponse errorSignupResponse = response.body();
-//                    Log.d("responseapi", errorSignupResponse.getMessage());
-
-//                    Toast.makeText(getApplicationContext(),"Register failed",Toast.LENGTH_SHORT).show();
-//                    System.out.println("Signup failed: " + response.errorBody().toString());
                 }
             }
-
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Metadata>> call, Throwable t) {
                 t.printStackTrace();
-//                System.out.println("Call Api lỗi");
+//                System.out.println("Call Api lỗi")
                 Toast.makeText(getApplicationContext(), "Call Api Lỗi", Toast.LENGTH_SHORT).show();
             }
         });
