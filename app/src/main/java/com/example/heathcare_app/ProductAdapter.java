@@ -14,15 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.heathcare_app.model.Medicine;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private Context context;
-    private List<Product> productList;
+    private List<Medicine> productList;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(Context context, List<Medicine> productList) {
         this.context = context;
         this.productList = productList;
     }
@@ -36,17 +37,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
-        holder.titleProduct.setText(product.getTitle());
+        Medicine product = productList.get(position);
+        holder.titleProduct.setText(product.getName());
         holder.oldPrice.setText(product.getOldPrice() + "đ");
-        holder.txtPrice.setText(product.getPrice() + "đ");
-        Glide.with(context).load(product.getImageUrl()).into(holder.imageView);
+        holder.txtPrice.setText(product.getNewPrice() + "đ");
+        Glide.with(context).load(product.getImage()).into(holder.imageView);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, BuyMedicineBookActivity.class);
-            intent.putExtra("imageUrl", product.getImageUrl());
-            intent.putExtra("title", product.getTitle());
+            intent.putExtra("imageUrl", product.getImage());
+            intent.putExtra("title", product.getName());
             intent.putExtra("oldPrice", product.getOldPrice()+"đ");
-            intent.putExtra("newPrice", product.getPrice()+"đ");
+            intent.putExtra("newPrice", product.getNewPrice()+"đ");
+            intent.putExtra("desc", product.getDescription());
             context.startActivity(intent);
         });
     }

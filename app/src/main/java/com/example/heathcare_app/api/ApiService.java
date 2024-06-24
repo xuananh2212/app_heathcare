@@ -1,11 +1,11 @@
 package com.example.heathcare_app.api;
 
-import com.example.heathcare_app.model.ApiResponse;
 import com.example.heathcare_app.model.ArticleResponse;
-import com.example.heathcare_app.model.LoginResponse;
+import com.example.heathcare_app.model.MedicineResponse;
+import com.example.heathcare_app.model.ApiResponse;
 import com.example.heathcare_app.model.Metadata;
 import com.example.heathcare_app.model.BookAppointment;
-import com.example.heathcare_app.model.Doctor;
+
 import com.example.heathcare_app.model.SignupResponse;
 import com.example.heathcare_app.model.User;
 import com.google.gson.Gson;
@@ -43,4 +43,6 @@ public interface ApiService {
     Call<List<User>> getListUser();
     @GET("articles")
     Call<ArticleResponse> getArticles();
+    @GET("medicines")
+    Call<MedicineResponse> getMedicines();
 }
