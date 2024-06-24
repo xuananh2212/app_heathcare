@@ -14,8 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class HomeActivity extends AppCompatActivity {
+import com.example.heathcare_app.model.SharedPrefManager;
 
+public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +43,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         // start goi db
-        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "").toString();
-        Toast.makeText(getApplicationContext(), "Welcom" + username, Toast.LENGTH_SHORT).show();
         CardView cardExit = findViewById(R.id.cardExit);
         cardExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
+                SharedPrefManager.getInstance(HomeActivity.this).clear();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
         });

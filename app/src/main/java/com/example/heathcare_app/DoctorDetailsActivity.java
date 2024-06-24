@@ -3,11 +3,14 @@ package com.example.heathcare_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,71 +18,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.example.heathcare_app.api.ApiResponseDoctor;
+import com.example.heathcare_app.api.ApiService;
+import com.example.heathcare_app.model.Doctor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
-    private  String [][] doctor_details1 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details2 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details3 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details4 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details5 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details6 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details7 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
-    private  String [][] doctor_details8 ={
-            {"Doctor Name: Nguyễn Văn Dũng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "600"},
-            {"Doctor Name: Nguyễn Xuân Tuấn Anh", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "690"},
-            {"Doctor Name: Nguyễn Xuân Tùng", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "900"},
-            {"Doctor Name: Nguyễn Thị Nga", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "500"},
-            {"Doctor Name: Lê Đức Nam", "Hospital Address: Pimpri" , "Exp: 5 years" , "Mobile No: 0981089128", "800"},
-    };
     TextView tv;
     Button btn;
-    String [][] doctor_details = {};
-    ArrayList list;
-    HashMap<String ,String> item;
+    List<HashMap<String, String>> doctor_details = new ArrayList<>();
+    ArrayList<HashMap<String, String>> list;
+    List<Doctor> doctors;
+    HashMap<String, String> item;
     SimpleAdapter sa;
 
     @Override
@@ -93,63 +51,83 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             return insets;
         });
         tv = findViewById(R.id.textViewDDTitle);
-        btn=findViewById(R.id.buttonDDBack);
+        btn = findViewById(R.id.buttonDDBack);
         Intent it = getIntent();
         String title = it.getStringExtra("title");
+        String id = it.getStringExtra("id");
         tv.setText(title);
-        if(title.compareTo("Family Physicians") == 0){
-            doctor_details = doctor_details1;
-        } else
-        if(title.compareTo("Dietician") == 0){
-            doctor_details = doctor_details2;
-        } else
-        if(title.compareTo("Dentician") == 0){
-            doctor_details = doctor_details3;
-        } else
-        if(title.compareTo("Dentist") == 0){
-            doctor_details = doctor_details4;
-        } else
-        if(title.compareTo("Surgeon") == 0){
-            doctor_details = doctor_details4;
-        }else{
-            doctor_details = doctor_details5;
-        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DoctorDetailsActivity.this, FindDoctorActivity.class));
             }
         });
-        list = new ArrayList();
-        for (int i = 0 ; i < doctor_details.length ; i++ ){
-            System.out.println(doctor_details[i][0]);
-            item = new HashMap<String, String>();
-            item.put("line1", doctor_details[i][0]);
-            item.put("line2", doctor_details[i][1]);
-            item.put("line3", doctor_details[i][2]);
-            item.put("line4", doctor_details[i][3]);
-            item.put("line5", "Cons Fees: " + doctor_details[i][4] + "/-");
-            list.add(item);
-        }
-        System.out.println(list);
-        sa = new SimpleAdapter(this,list, R.layout.multi_lines, new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.line_a, R.id.line_b,R.id.line_c,R.id.line_d,R.id.line_e});
+        callApiGetDoctors(id);
+    }
+
+    private void callApiGetDoctors(String id) {
+        ApiService.apiService.getListDoctors(Integer.valueOf(id)).enqueue(new Callback<ApiResponseDoctor>() {
+            @Override
+            public void onResponse(Call<ApiResponseDoctor> call, Response<ApiResponseDoctor> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponseDoctor apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        doctors = apiResponse.getData().getDoctors();
+                        for (Doctor doctor : doctors) {
+                            HashMap<String, String> details = new HashMap<>();
+                            details.put("name", "Doctor Name: " + doctor.getName());
+                            details.put("address", "Hospital Address: " + doctor.getAddress());
+                            details.put("experience", "Exp: " + doctor.getExp() + " years");
+                            details.put("phone", "Mobile No: " + doctor.getPhone());
+                            details.put("price", String.valueOf(doctor.getPrice()));
+                            details.put("image", doctor.getImage());
+                            details.put("id", String.valueOf(doctor.getId()));
+                            doctor_details.add(details);
+                        }
+                        populateListView();
+                    } else {
+                        Toast.makeText(DoctorDetailsActivity.this, "Response Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(DoctorDetailsActivity.this, "Response Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponseDoctor> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(DoctorDetailsActivity.this, "onFailure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateListView() {
+        list = new ArrayList<>(doctor_details);
+        sa = new SimpleAdapter(this, list, R.layout.multi_lines, new String[]{"name", "address", "experience", "phone", "price", "image"}, new int[]{R.id.line_a, R.id.line_b, R.id.line_c, R.id.line_d, R.id.line_e, R.id.productImage}) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ImageView imageView = view.findViewById(R.id.productImage);
+                String imageUrl = ((HashMap<String, String>) getItem(position)).get("image");
+                Glide.with(DoctorDetailsActivity.this).load(imageUrl).into(imageView);
+                return view;
+            }
+        };
         ListView lst = findViewById(R.id.listViewDD);
         lst.setAdapter(sa);
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 Intent it = new Intent(DoctorDetailsActivity.this, BookAppointmentActivity.class);
-                it.putExtra("text1", title);
-                it.putExtra("text2", doctor_details[i][0]);
-                it.putExtra("text3", doctor_details[i][1]);
-                it.putExtra("text4", doctor_details[i][2]);
-                it.putExtra("text5", doctor_details[i][3]);
-                it.putExtra("text6", doctor_details[i][4]);
+                it.putExtra("text1", tv.getText().toString());
+                it.putExtra("text2", doctor_details.get(i).get("name"));
+                it.putExtra("text3", doctor_details.get(i).get("address"));
+                it.putExtra("text4", doctor_details.get(i).get("experience"));
+                it.putExtra("text5", doctor_details.get(i).get("phone"));
+                it.putExtra("text6", doctor_details.get(i).get("price"));
+                it.putExtra("text7", doctor_details.get(i).get("id"));
                 startActivity(it);
-
-
             }
         });
-
     }
 }
