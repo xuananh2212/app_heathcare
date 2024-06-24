@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="JMsolution Marine Luminous Pearl Deep Moisture Mask là bộ sản phẩm chăm sóc cho da bao gồm: Step 1 - Marine waterfull essence: Tinh chất tăng cường dưỡng ẩm cho da. Step 2 – Marine Luminous Mask: Mặt nạ dưỡng ẩm và dưỡng trắng. Step 3 – Marine All Face Eye Cream: Kem dưỡng quanh vùng mắt."
             android:textSize="16sp" />
 
         <RatingBar

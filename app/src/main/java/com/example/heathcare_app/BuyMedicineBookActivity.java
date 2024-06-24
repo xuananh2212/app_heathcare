@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 
 public class BuyMedicineBookActivity extends AppCompatActivity {
     private ImageView productImage;
-    private TextView productTitle, productOldPrice, productNewPrice;
+    private TextView productTitle, productOldPrice, productNewPrice, productDescription;
     private Button buyButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         productTitle = findViewById(R.id.productTitle);
         productOldPrice = findViewById(R.id.productOldPrice);
         productNewPrice = findViewById(R.id.productNewPrice);
+        productDescription = findViewById(R.id.productDescription);
         buyButton = findViewById(R.id.buyButton);
 
         // Giả sử chúng ta nhận dữ liệu từ Intent
@@ -40,11 +41,13 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         String oldPrice = intent.getStringExtra("oldPrice");
         String newPrice = intent.getStringExtra("newPrice");
+        String desc = intent.getStringExtra("desc");
 
         Glide.with(this).load(imageUrl).into(productImage);
         productTitle.setText(title);
         productOldPrice.setText(oldPrice);
         productNewPrice.setText(newPrice);
+        productDescription.setText(desc);
 
         productOldPrice.setPaintFlags(productOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         buyButton.setOnClickListener(v -> showQuantityPickerDialog());
