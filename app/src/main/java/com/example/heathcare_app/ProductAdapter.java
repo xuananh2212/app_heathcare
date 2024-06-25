@@ -44,10 +44,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Glide.with(context).load(product.getImage()).into(holder.imageView);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, BuyMedicineBookActivity.class);
+            intent.putExtra("id", product.getId());
             intent.putExtra("imageUrl", product.getImage());
             intent.putExtra("title", product.getName());
-            intent.putExtra("oldPrice", product.getOldPrice()+"đ");
-            intent.putExtra("newPrice", product.getNewPrice()+"đ");
+            intent.putExtra("oldPrice", product.getOldPrice() + "");
+            intent.putExtra("newPrice", product.getNewPrice() + "");
             intent.putExtra("desc", product.getDescription());
             context.startActivity(intent);
         });
