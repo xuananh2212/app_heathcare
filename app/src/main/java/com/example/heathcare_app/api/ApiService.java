@@ -1,6 +1,8 @@
 package com.example.heathcare_app.api;
 
 import com.example.heathcare_app.model.ArticleResponse;
+import com.example.heathcare_app.model.Cart;
+import com.example.heathcare_app.model.CartResponse;
 import com.example.heathcare_app.model.MedicineResponse;
 import com.example.heathcare_app.model.ApiResponse;
 import com.example.heathcare_app.model.Metadata;
@@ -27,7 +29,7 @@ public interface ApiService {
     String urlIpByDat = "http://192.168.0.3:3000/v1/api/";
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl(urlIpByDat)
+            .baseUrl("http://192.168.8.1:3052/v1/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -45,4 +47,6 @@ public interface ApiService {
     Call<ArticleResponse> getArticles();
     @GET("medicines")
     Call<MedicineResponse> getMedicines();
+    @POST("order")
+    Call<CartResponse> handleCreateOrder(@Body Cart cart);
 }
