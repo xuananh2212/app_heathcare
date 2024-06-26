@@ -6,8 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,7 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.heathcare_app.api.ApiResponseBookAppointment;
+import com.example.heathcare_app.model.ApiResponseBookAppointment;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.BookAppointment;
 import com.example.heathcare_app.model.SharedPrefManager;
@@ -31,7 +29,6 @@ import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;

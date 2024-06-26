@@ -50,13 +50,14 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:src="@drawable/home"/>
+
                  <TextView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:text="LAB TEST"
+                     android:text="LỊCH HẸN"
                      android:textAlignment="center"
                      android:textColor="@color/white"
-                     android:textStyle="bold"/>
+                     android:textStyle="bold" />
 
              </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -118,13 +119,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/chat"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FIND DOCTOR"
+                    android:text="ĐẶT LỊCH - BÁC SĨ"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

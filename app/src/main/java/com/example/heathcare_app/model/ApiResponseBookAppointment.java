@@ -1,4 +1,4 @@
-package com.example.heathcare_app.api;
+package com.example.heathcare_app.model;
 
 public class ApiResponseBookAppointment {
     private String message;

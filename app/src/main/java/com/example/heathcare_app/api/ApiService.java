@@ -1,5 +1,8 @@
 package com.example.heathcare_app.api;
 
+import com.example.heathcare_app.model.ApiResponseBookAppointment;
+import com.example.heathcare_app.model.ApiResponseDoctor;
+import com.example.heathcare_app.model.ApiResponseGetBookAppointment;
 import com.example.heathcare_app.model.ArticleResponse;
 import com.example.heathcare_app.model.Cart;
 import com.example.heathcare_app.model.CartResponse;
@@ -37,6 +40,8 @@ public interface ApiService {
     Call<ApiResponse<Metadata>> signup(@Body User user);
     @POST("auth/login")
     Call<ApiResponse<Metadata>> login(@Body User user);
+    @GET("book-appointments")
+    Call<ApiResponseGetBookAppointment> handleGetBookAppointments(@Query("userId") int userId);
     @POST("book-appointments")
     Call<ApiResponseBookAppointment> handleBookAppointments(@Body BookAppointment bookAppointment);
     @GET("doctors")

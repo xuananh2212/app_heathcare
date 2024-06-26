@@ -52,7 +52,7 @@
             android:name=".DoctorDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".LabTestActivity"
+            android:name=".ShowBookAppointmentActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"

@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         textEmail = findViewById(R.id.textEmail);
         String emailSaved = SharedPrefManager.getInstance(LoginActivity.this).getString("email","");
         Log.d("responseapi", "Default Email" + emailSaved);
