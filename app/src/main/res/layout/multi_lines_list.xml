@@ -4,62 +4,88 @@
     android:layout_height="match_parent"
     android:background="@drawable/border_shadow"
     android:orientation="vertical"
-    android:padding="8dp">
-    <TextView
-        android:id="@+id/line_a"
+    android:padding="16dp"
+    android:gravity="center_horizontal"> <!-- Căn giữa nội dung theo chiều ngang -->
+
+    <ImageView
+        android:id="@+id/productImageBA"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/health1" />
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        style="@android:style/Widget.DeviceDefault.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="false"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressTint="#ffc106"
+        android:rating="4"
+        android:stepSize="0.1" />
+
+    <TextView
+        android:id="@+id/line_aBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên bác sĩ:"
         android:textColor="#000"
         android:textSize="16sp"
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/line_b"
+        android:id="@+id/line_bBA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="sđt"
         android:textColor="#000"
-        android:textSize="14sp"
-        />
+        android:textSize="14sp" />
     <TextView
-        android:id="@+id/line_d"
+        android:id="@+id/line_cBA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="TextView"
+        android:text="exp"
         android:textColor="#000"
-        android:textSize="14sp"
-
-        />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/line_dBA"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:text="thời gian hẹn"
+        android:textColor="#000"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/line_eBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="giá:"
+        android:textColor="#000"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/line_c"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:text="TextView"
-            android:textColor="#000"
-            android:textSize="12sp"
+    <TextView
+        android:id="@+id/line_fBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian từ:"
+        android:textColor="#4CAF50"
+        android:textSize="14sp" />
 
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50" />
-        <TextView
-            android:id="@+id/line_e"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="TextView"
-            android:textColor="#000"
-            android:textSize="14sp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/line_gBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian đến:"
+        android:textColor="#F44336"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/cancelAppointmentButtonBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+    android:layout_marginTop="32dp"
+    android:text="Hủy lịch hẹn" />
 </LinearLayout>

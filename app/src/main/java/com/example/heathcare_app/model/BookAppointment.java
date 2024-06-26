@@ -3,47 +3,47 @@ package com.example.heathcare_app.model;
 import java.util.Date;
 
 public class BookAppointment {
-    private  int user_id;
-    private int doctor_id;
-    private Date startTime;
-    private Date endTime;
+    private  int userId;
+    private int doctorId;
+    private String startTime;
+    private String endTime;
 
-    public BookAppointment(int user_id, int doctor_id, Date startTime, Date endTime) {
-        this.user_id = user_id;
-        this.doctor_id = doctor_id;
+    public BookAppointment(int userId, int doctorId, String startTime, String endTime) {
+        this.userId = userId;
+        this.doctorId = doctorId;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getDoctor_id() {
-        return doctor_id;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public void setDoctor_id(int doctor_id) {
-        this.doctor_id = doctor_id;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

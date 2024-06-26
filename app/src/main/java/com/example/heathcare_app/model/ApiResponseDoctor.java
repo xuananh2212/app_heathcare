@@ -1,4 +1,4 @@
-package com.example.heathcare_app.api;
+package com.example.heathcare_app.model;
 
 import com.example.heathcare_app.model.Doctor;
 import java.util.List;

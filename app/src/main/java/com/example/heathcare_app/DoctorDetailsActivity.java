@@ -19,7 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.example.heathcare_app.api.ApiResponseDoctor;
+import com.example.heathcare_app.model.ApiResponseDoctor;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.Doctor;
 
@@ -37,7 +37,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     List<HashMap<String, String>> doctor_details = new ArrayList<>();
     ArrayList<HashMap<String, String>> list;
     List<Doctor> doctors;
-    HashMap<String, String> item;
     SimpleAdapter sa;
 
     @Override

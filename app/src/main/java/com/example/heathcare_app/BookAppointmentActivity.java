@@ -20,9 +20,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.heathcare_app.api.ApiResponseBookAppointment;
+import com.example.heathcare_app.model.ApiResponseBookAppointment;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.BookAppointment;
+import com.example.heathcare_app.model.SharedPrefManager;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -118,12 +120,14 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 String selectedTime = timeButton.getText().toString();
                 String selectedTimeEnd = timeButtonEnd.getText().toString();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+               // dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 String startTimeStr = selectedDate + " " + selectedTime;
                 String endTimeStr = selectedDate + " " + selectedTimeEnd;
                 try {
                     Date startTime  = dateFormat.parse(startTimeStr);
                     Date endTime = dateFormat.parse(endTimeStr);
-                    BookAppointment bookAppointment = new BookAppointment(7, Integer.parseInt(id), new Date(), new Date());
+                    String strId =   SharedPrefManager.getInstance(BookAppointmentActivity.this).getString("id","null");
+                    BookAppointment bookAppointment = new BookAppointment(Integer.parseInt(strId), Integer.parseInt(id), startTime.toString(), endTime.toString());
                     callApiAddBookAppointments(bookAppointment);
 
                 }catch (ParseException e){
@@ -153,9 +157,20 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     ApiResponseBookAppointment apiResponse = response.body();
                     if(apiResponse.getStatus() == 201){
                         Toast.makeText(BookAppointmentActivity.this , "Đặt lịch thành công",Toast.LENGTH_SHORT ).show();
+                    } else{
+                        Toast.makeText(BookAppointmentActivity.this , apiResponse.getMessage(),Toast.LENGTH_SHORT ).show();
                     }
+
                 } else {
-                   Toast.makeText(BookAppointmentActivity.this , "Response error",Toast.LENGTH_SHORT ).show();
+                    try {
+                        String errorBody = response.errorBody().string();
+                        // Parse the error body to get a meaningful message if your API provides one
+                        ApiResponseBookAppointment errorResponse = new Gson().fromJson(errorBody, ApiResponseBookAppointment.class);
+                        Toast.makeText(BookAppointmentActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(BookAppointmentActivity.this, "Response error", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
 

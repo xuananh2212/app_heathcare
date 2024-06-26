@@ -1,13 +1,15 @@
-package com.example.heathcare_app.api;
+package com.example.heathcare_app.model;
 
 public class ApiResponseBookAppointment {
     private String message;
     private int status;
 
+
     public ApiResponseBookAppointment(String message, int status) {
         this.message = message;
         this.status = status;
     }
+
 
     public String getMessage() {
         return message;
