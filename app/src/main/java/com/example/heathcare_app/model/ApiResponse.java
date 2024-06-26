@@ -7,6 +7,18 @@ public class ApiResponse<T> {
 
     // Getter và Setter
 
+    public ApiResponse(int status, String message, T data) {
+
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
+    public ApiResponse(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -29,5 +41,14 @@ public class ApiResponse<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         cardExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPrefManager.getInstance(HomeActivity.this).clear();
+                SharedPrefManager.getInstance(HomeActivity.this).removeKey("id");
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
         });
