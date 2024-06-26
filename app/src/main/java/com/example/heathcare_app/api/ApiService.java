@@ -29,12 +29,12 @@ public interface ApiService {
     String urlIpByDat = "http://192.168.0.3:3000/v1/api/";
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.8.1:3052/v1/api/")
+            .baseUrl("http://192.168.0.3:3000/v1/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
     @POST("auth/signup")
-    Call<SignupResponse> signup(@Body User user);
+    Call<ApiResponse<Metadata>> signup(@Body User user);
     @POST("auth/login")
     Call<ApiResponse<Metadata>> login(@Body User user);
     @POST("book-appointments")

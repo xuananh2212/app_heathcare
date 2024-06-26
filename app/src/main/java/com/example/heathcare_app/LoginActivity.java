@@ -24,9 +24,11 @@ import com.example.heathcare_app.model.Metadata;
 import com.example.heathcare_app.model.SharedPrefManager;
 import com.example.heathcare_app.model.SignupResponse;
 import com.example.heathcare_app.model.User;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -52,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
         textEmail = findViewById(R.id.textEmail);
+        String emailSaved = SharedPrefManager.getInstance(LoginActivity.this).getString("email","");
+        Log.d("responseapi", "Default Email" + emailSaved);
+        textEmail.setText(emailSaved);
         textPassword = findViewById(R.id.textPassword);
         linkRegister = findViewById(R.id.linkRegister);
         btnLogin = findViewById(R.id.btnLogin);
@@ -85,22 +90,38 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Metadata> loginResponse = response.body();
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    Log.d("responseapi", loginResponse.getMessage());
+//                    Log.d("responseapi", loginResponse.getMessage());
                     Metadata metadata = loginResponse.getData();
-                    Log.d("responseapi", metadata.toString());
+//                    Log.d("responseapi", metadata.toString());
                     int id = metadata.getId();
+                    String email = metadata.getEmail();
+                    Toast.makeText(getApplicationContext(),loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
                     SharedPrefManager.getInstance(LoginActivity.this).saveString("id",Integer.toString(id));
+                    SharedPrefManager.getInstance(LoginActivity.this).saveString("email",email);
+                    String emailAfterLogin = SharedPrefManager.getInstance(LoginActivity.this).getString("email","");
+                    Log.d("responseapi", "Email after login" + emailAfterLogin);
                 String strId =   SharedPrefManager.getInstance(LoginActivity.this).getString("id","null");
-                    Log.d("responseapi", strId);
-
+//                    Log.d("responseapi", strId);
                 } else {
-                    Toast.makeText(getApplicationContext(),"Signup failed",Toast.LENGTH_SHORT).show();
+                    Log.d("responseapi", "Login fail");
+                    try {
+                        if (response.errorBody() != null) {
+                            String errorBody = response.errorBody().string();
+                            ApiResponse<Metadata> errorResponse = new Gson().fromJson(errorBody, ApiResponse.class);
+                            Log.d("responseapi", "Parsed error response: " + errorResponse.toString());
+                            Toast.makeText(getApplicationContext(),errorResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("responseapi", "ErrorBody is null");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<Metadata>> call, Throwable t) {
                 t.printStackTrace();
-//                System.out.println("Call Api lỗi")
+                System.out.println("Call Api lỗi");
                 Toast.makeText(getApplicationContext(), "Call Api Lỗi", Toast.LENGTH_SHORT).show();
             }
         });
