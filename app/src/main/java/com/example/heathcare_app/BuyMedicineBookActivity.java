@@ -22,6 +22,7 @@ import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.BookAppointment;
 import com.example.heathcare_app.model.Cart;
 import com.example.heathcare_app.model.CartResponse;
+import com.example.heathcare_app.model.SharedPrefManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,16 +52,16 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         String oldPrice = intent.getStringExtra("oldPrice");
         String newPrice = intent.getStringExtra("newPrice");
         String desc = intent.getStringExtra("desc");
-
+        String idUser =   SharedPrefManager.getInstance(BuyMedicineBookActivity.this).getString("id","null");
         Glide.with(this).load(imageUrl).into(productImage);
         productTitle.setText(title);
         productOldPrice.setText(oldPrice);
         productNewPrice.setText(newPrice);
         productDescription.setText(desc);
         productOldPrice.setPaintFlags(productOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        buyButton.setOnClickListener(v -> showQuantityPickerDialog(id, Double.parseDouble(oldPrice), Double.parseDouble(newPrice)));
+        buyButton.setOnClickListener(v -> showQuantityPickerDialog(Integer.parseInt(idUser), id, Double.parseDouble(oldPrice), Double.parseDouble(newPrice)));
     }
-    private void showQuantityPickerDialog(int productId, double oldPrice, double newPrice) {
+    private void showQuantityPickerDialog(int idUser, int productId, double oldPrice, double newPrice) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chọn số lượng");
 
@@ -75,7 +76,7 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Xác nhận", (dialog, which) -> {
             int quantity = numberPicker.getValue();
-            Cart cart = new Cart(productId,1,quantity, oldPrice, newPrice, "pending");
+            Cart cart = new Cart(productId,idUser,quantity, oldPrice, newPrice, "pending");
             callApiCreateOrder(cart);
         });
 
