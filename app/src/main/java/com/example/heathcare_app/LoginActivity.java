@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<Metadata>> call, Throwable t) {
                 t.printStackTrace();
-                System.out.println("Call Api lỗi");
+                Log.d("responseapi","Call Api lỗi");
                 Toast.makeText(getApplicationContext(), "Call Api Lỗi", Toast.LENGTH_SHORT).show();
             }
         });
