@@ -69,7 +69,7 @@
         android:id="@+id/line_fBA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thời gian từ:"
+        android:text="Thời gian từ: "
         android:textColor="#4CAF50"
         android:textSize="14sp" />
 
@@ -77,8 +77,15 @@
         android:id="@+id/line_gBA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thời gian đến:"
+        android:text="Thời gian đến: "
         android:textColor="#F44336"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/line_hBA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trạng Thái: "
+        android:textColor="#4CAF50"
         android:textSize="14sp" />
 
     <Button

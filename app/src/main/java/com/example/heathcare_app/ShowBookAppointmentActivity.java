@@ -1,5 +1,7 @@
 package com.example.heathcare_app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.ApiResponseDoctor;
 import com.example.heathcare_app.model.ApiResponseGetBookAppointment;
+import com.example.heathcare_app.model.ApiResponsePatchBookAppointment;
 import com.example.heathcare_app.model.Appointment;
 import com.example.heathcare_app.model.Doctor;
 import com.example.heathcare_app.model.SharedPrefManager;
@@ -65,6 +68,19 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
         String strId =   SharedPrefManager.getInstance(ShowBookAppointmentActivity.this).getString("id","null");
         callApiGetBookAppoint(strId);
     }
+    private String handleCovertStatus(String status){
+        switch (status){
+            case "pending" :
+                return "Đang xử lý";
+            case "accepted":
+                return "Đã được chấp nhận";
+            case "rejected":
+                return "Đã hủy";
+            default:
+                return "Đang xử lý";
+        }
+    }
+
     private void callApiGetBookAppoint(String id) {
         ApiService.apiService.handleGetBookAppointments(Integer.valueOf(id)).enqueue(new Callback<ApiResponseGetBookAppointment>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -91,8 +107,9 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
                             String formattedDateTime = dateTime.format(formatter);
                             String formattedDateTimeEnd = dateTimeEnd.format(formatter);
                             details.put("startTime","Thời gian từ: " + formattedDateTime );
-                            details.put("endTime", "Thời gian đến" + formattedDateTimeEnd);
-                            details.put("id", String.valueOf(appointment.getDoctor().getId()));
+                            details.put("endTime", "Thời gian đến: " + formattedDateTimeEnd);
+                            details.put("status", "Trạng thái: " + handleCovertStatus(appointment.getStatus()));
+                            details.put("id", String.valueOf(appointment.getId()));
                             bookAppointmentDetails.add(details);
                         }
                         populateListView();
@@ -111,16 +128,76 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
             }
         });
     }
+    private void showCancelConfirmationDialog(int appointmentId) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận hủy")
+                .setMessage("Bạn có chắc chắn muốn hủy lịch hẹn này không?")
+                .setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Call the API to cancel the appointment
+                       cancelAppointment(appointmentId);
+                    }
+                })
+                .setNegativeButton("Không", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+    private void cancelAppointment(int appointmentId) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("status", "rejected");
+
+        ApiService.apiService.handlePatchBookAppointments(appointmentId,body).enqueue(new Callback<ApiResponsePatchBookAppointment>() {
+            @Override
+            public void onResponse(Call<ApiResponsePatchBookAppointment> call, Response<ApiResponsePatchBookAppointment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponsePatchBookAppointment apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        Toast.makeText(ShowBookAppointmentActivity.this, "Lịch hẹn đã được hủy", Toast.LENGTH_SHORT).show();
+                        // Refresh the list of appointments
+                        String strId = SharedPrefManager.getInstance(ShowBookAppointmentActivity.this).getString("id", "null");
+                        callApiGetBookAppoint(strId);
+                    } else {
+                        Toast.makeText(ShowBookAppointmentActivity.this, "Hủy lịch hẹn thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ShowBookAppointmentActivity.this, "Hủy lịch hẹn thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponsePatchBookAppointment> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(ShowBookAppointmentActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
 
     private void populateListView() {
         list = new ArrayList<>(bookAppointmentDetails);
-        sa = new SimpleAdapter(this, list, R.layout.multi_lines_list, new String[]{"name", "address", "experience", "phone", "price","startTime","endTime" , "image"}, new int[]{R.id.line_aBA, R.id.line_bBA, R.id.line_cBA, R.id.line_dBA, R.id.line_eBA,R.id.line_fBA,R.id.line_gBA, R.id.productImageBA}) {
+        sa = new SimpleAdapter(this, list, R.layout.multi_lines_list, new String[]{"name", "address", "experience", "phone", "price","startTime","endTime", "status" , "image"}, new int[]{R.id.line_aBA, R.id.line_bBA, R.id.line_cBA, R.id.line_dBA, R.id.line_eBA,R.id.line_fBA,R.id.line_gBA,R.id.line_hBA ,R.id.productImageBA}) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 ImageView imageView = view.findViewById(R.id.productImageBA);
+                Button cancelButton = view.findViewById(R.id.cancelAppointmentButtonBA);
                 String imageUrl = ((HashMap<String, String>) getItem(position)).get("image");
                 Glide.with(ShowBookAppointmentActivity.this).load(imageUrl).into(imageView);
+                int appointmentId = Integer.parseInt(((HashMap<String, String>) getItem(position)).get("id"));
+                String status = ((HashMap<String, String>) getItem(position)).get("status").replaceAll("Trạng thái:", "").trim();
+                cancelButton.setText(status);
+                if (!status.equals("Đã hủy")) {
+                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showCancelConfirmationDialog(appointmentId);
+                        }
+                    });
+                } else {
+                    cancelButton.setEnabled(false);
+                }
                 return view;
             }
         };
