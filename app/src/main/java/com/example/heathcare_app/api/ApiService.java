@@ -4,8 +4,11 @@ import com.example.heathcare_app.model.ApiResponseBookAppointment;
 import com.example.heathcare_app.model.ApiResponseDoctor;
 import com.example.heathcare_app.model.ApiResponseGetBookAppointment;
 import com.example.heathcare_app.model.ArticleResponse;
+import com.example.heathcare_app.model.BodyDeleteCart;
+import com.example.heathcare_app.model.BodyUpdate;
 import com.example.heathcare_app.model.Cart;
 import com.example.heathcare_app.model.CartResponse;
+import com.example.heathcare_app.model.DataCarts;
 import com.example.heathcare_app.model.MedicineResponse;
 import com.example.heathcare_app.model.ApiResponse;
 import com.example.heathcare_app.model.Metadata;
@@ -22,8 +25,11 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -40,6 +46,12 @@ public interface ApiService {
     Call<ApiResponse<Metadata>> signup(@Body User user);
     @POST("auth/login")
     Call<ApiResponse<Metadata>> login(@Body User user);
+    @GET("orders")
+    Call<ApiResponse<DataCarts>> handleGetOrderDetails(@Query("userId") int userId,@Query("status") String status);
+    @PATCH("order")
+    Call<ApiResponse<Object>> handleUpdateItemOrderDetails(@Body BodyUpdate bodyUpdate);
+    @DELETE("order/{id}")
+    Call<ApiResponse<Integer>> handleRemoveItemOrdeDetails(@Path("id") int orderId);
     @GET("book-appointments")
     Call<ApiResponseGetBookAppointment> handleGetBookAppointments(@Query("userId") int userId);
     @POST("book-appointments")

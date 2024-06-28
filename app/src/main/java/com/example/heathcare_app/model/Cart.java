@@ -23,6 +23,10 @@ public class Cart {
         this.status = status;
     }
 
+    public Cart(int quantity) {
+        this.quantity = quantity;
+    }
+
     public int getProductId() {
         return productId;
     }
@@ -45,5 +49,17 @@ public class Cart {
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "productId=" + productId +
+                ", userId=" + userId +
+                ", quantity=" + quantity +
+                ", oldPrice=" + oldPrice +
+                ", newPrice=" + newPrice +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

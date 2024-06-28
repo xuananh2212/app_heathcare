@@ -18,7 +18,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.example.heathcare_app.api.ApiResponseBookAppointment;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.BookAppointment;
 import com.example.heathcare_app.model.Cart;
