@@ -5,12 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.heathcare_app.OrderDetailsActivity;
 import com.example.heathcare_app.R;
 import com.example.heathcare_app.api.ApiService;
@@ -29,6 +32,7 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
     private boolean updateSucces;
     private List<Integer> arrayNumber;
 
+
     public interface OnQuantityChangeListener {
         void onQuantityChanged();
     }
@@ -42,11 +46,13 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
     public static class ItemCartsViewHolder extends RecyclerView.ViewHolder {
         TextView tvProductName, tvProductPrice, tvQuantity;
         Button btnDecrease, btnIncrease, btnRemoveItem;
+        ImageView imageView;
 
         public ItemCartsViewHolder(View itemView) {
             super(itemView);
             tvProductName = itemView.findViewById(R.id.tvProductName);
             tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
+            imageView = itemView.findViewById(R.id.itemProductImage);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
             btnDecrease = itemView.findViewById(R.id.btnDecrease);
             btnIncrease = itemView.findViewById(R.id.btnIncrease);
@@ -67,8 +73,42 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
         holder.tvProductName.setText(product.getName());
 //        holder.tvProductPrice.setText("Giá: " + product.getPrice() + " VND");
         holder.tvProductPrice.setText(String.format("Giá: %.2f VND", product.getPrice()));
+        Log.d("responseapi",product.getUrlImage());
+//        Glide.with(holder.itemView.getContext())
+//                .load(product.getUrlImage()) // Provide the image URL here
+//                .into(holder.imageView);
         holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
-
+        String imageUrl = product.getUrlImage();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Log.d("responseapi","url_img ok");
+            if (holder.itemView.getContext() != null) {
+                // Ensure the ImageView is not null
+                if (holder.imageView != null) {
+                    // Load the image using Glide
+                    Glide.with(holder.itemView.getContext())
+                            .load(imageUrl)
+                            .apply(new RequestOptions()
+                                    .placeholder(R.drawable.medicine1) // Set a placeholder image
+                                    .error(R.drawable.error))           // Set an error image if load fails
+                            .into(holder.imageView);
+                } else {
+                    Log.d("responseapi", "ImageView is null at position " + position);
+                }
+            } else {
+                Log.d("responseapi", "Context is null at position " + position);
+            }
+            // Load the image using Glide
+//            Glide.with(holder.itemView.getContext())
+//                    .load(imageUrl)
+//                    .apply(new RequestOptions()
+//                            .placeholder(R.drawable.medicine1) // Set a placeholder image
+//                            .error(R.drawable.error))           // Set an error image if load fails
+//                    .into(holder.imageView);
+        } else {
+            Log.d("responseapi","url_img  k  ok");
+            // Set a placeholder image if URL is null or empty
+            holder.imageView.setImageResource(R.drawable.medicine2);
+        }
         holder.btnDecrease.setOnClickListener(v -> {
             Log.d("responseapi", product.toString());
             if (product.getQuantity() > 1) {

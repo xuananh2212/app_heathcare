@@ -7,12 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="balck_100">#fafafa</color>
+    <color name="cayan_a100">#80deea</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_400">#eeeeee</color>
+    <color name="brown_300">#f5f5f5</color>
+    <color name="green_a400">#69f0ae</color>
+    <color name="text_home">#3e2723</color>
+    <color name="bg_home">#f5f5f5</color>
+    <color name="icon_home">#69f0ae</color>
+    <color name="gray_50">#fafafa</color>
+    <color name="old_price">#ff1744</color>
+    <color name="new_price">#404040</color>
     <color name="colorPrimaryDark">#3262C4</color>
     <color name="my_primary">#5E35B1</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFFFF</color>
-
     <color name="colorRed">#C11515</color>
     <color name="purpleDark">#FF210642</color>
     <color name="yellowLight">#FFF777</color>
@@ -20,4 +30,5 @@
     <color name="btn_login">#1976D2</color>
     <color name="link_register">#1e88e5</color>
     <color name="your_action_bar_color">#FF5722</color>
+    <color name="template">#64dd17</color>
 </resources>

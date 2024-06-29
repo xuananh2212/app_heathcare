@@ -116,7 +116,7 @@
             android:background="@drawable/btn_login"
             android:paddingLeft="60dp"
             android:paddingRight="60dp"
-            android:text="Sign Up"
+            android:text="Đăng kí"
             android:textColor="@color/white" />
 
         <LinearLayout

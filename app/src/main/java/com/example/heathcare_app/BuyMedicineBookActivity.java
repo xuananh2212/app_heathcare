@@ -94,6 +94,10 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
                     CartResponse apiResponse = response.body();
                     if(apiResponse.getStatus() == 201){
                         Toast.makeText(BuyMedicineBookActivity.this , "Đặt hàng thành công",Toast.LENGTH_SHORT ).show();
+//                        startActivity(new Intent(BuyMedicineBookActivity.this, BuyMedicineActivity.class));
+                        Intent intent = new Intent(BuyMedicineBookActivity.this, BuyMedicineActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        finish();
                     }
                 } else {
                     Toast.makeText(BuyMedicineBookActivity.this, "Response error",Toast.LENGTH_SHORT ).show();

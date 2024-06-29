@@ -102,26 +102,19 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<DataCarts> responseOrderDetails = response.body();
                     Log.d("responseapi", responseOrderDetails.getMessage());
-//                    for (Carts carts : responseOrderDetails.getData().getCarts()) {
-//                        String name = carts.getMedicine().getName();
-//                        int price = (int) carts.getNewPrice();
-//                        int quantity = cart.getQuantity();
-//                        ItemCarts itemCart = new ItemCarts(name, price, quantity);
-//                        itemCartsList.add(itemCart);
-//                    }
+
 
                     for (Carts carts : responseOrderDetails.getData().getCarts()) {
 
-//                       Log.d("responseapi",carts.toString());
-//                        Log.d("responseapi",carts.getMedicine().getName());
-//                        Log.d("responseapi",Double.toString(carts.getNewPrice()));
-//                        Log.d("responseapi",Integer.toString(carts.getQuantity()));
                         int id = carts.getId();
                         listIdItem.add(id);
                         String name = carts.getMedicine().getName();
+                        String img = carts.getMedicine().getImage();
+                        Log.d("responseapi",img);
                         float price = (float) carts.getNewPrice();
                         int quantity = carts.getQuantity();
-                        ItemCarts itemCart = new ItemCarts(name, price, quantity, id);
+                        ItemCarts itemCart = new ItemCarts(name, price, quantity, id,img);
+                        Log.d("responseapi",itemCart.toString());
                         itemCartsList.add(itemCart);
                     }
                     RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -131,17 +124,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     recyclerView.setAdapter(cartsAdapter);
                     updateTotal();
                 }
-//                updateTotal();
-
             }
-
-//            private void updateTotal() {
-//                float total = 0;
-//                for (ItemCarts itemCarts : itemCartsList) {
-//                    total += itemCarts.getPrice() * itemCarts.getQuantity();
-//                }
-//                tvTotal.setText("Tổng: " + total + " VND");
-//            }
 
             @Override
             public void onFailure(Call<ApiResponse<DataCarts>> call, Throwable t) {
@@ -180,8 +163,5 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
         tvTotal.setText("Tổng: " + total + " VND");
     }
-//
-//    public void onQuantityChanged() {
-//        updateTotal();
-//    }
+
 }

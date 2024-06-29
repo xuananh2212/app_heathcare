@@ -39,9 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText textEmail, textPassword;
     TextView linkRegister;
     Button btnLogin;
-//    Acount acount1 = new Acount("datnv","123");
-//    Acount acount2 = new Acount("xuanhanhnx","123");
-//    Acount acount3 = new Acount("thend","123");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +50,19 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         textEmail = findViewById(R.id.textEmail);
-        String emailSaved = SharedPrefManager.getInstance(LoginActivity.this).getString("email","");
+        String emailSaved = SharedPrefManager.getInstance(LoginActivity.this).getString("email", "");
         Log.d("responseapi", "Default Email" + emailSaved);
         textEmail.setText(emailSaved);
         textPassword = findViewById(R.id.textPassword);
         linkRegister = findViewById(R.id.linkRegister);
         btnLogin = findViewById(R.id.btnLogin);
+        String savedUserId = SharedPrefManager.getInstance(LoginActivity.this).getString("id", "");
+        if (!savedUserId.isEmpty()) {
+            // User ID found, navigate to HomeActivity
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish(); // Finish LoginActivity to prevent returning to it on back press
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
         linkRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,12 +99,12 @@ public class LoginActivity extends AppCompatActivity {
 //                    Log.d("responseapi", metadata.toString());
                     int id = metadata.getId();
                     String email = metadata.getEmail();
-                    Toast.makeText(getApplicationContext(),loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                    SharedPrefManager.getInstance(LoginActivity.this).saveString("id",Integer.toString(id));
-                    SharedPrefManager.getInstance(LoginActivity.this).saveString("email",email);
-                    String emailAfterLogin = SharedPrefManager.getInstance(LoginActivity.this).getString("email","");
+                    Toast.makeText(getApplicationContext(), loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    SharedPrefManager.getInstance(LoginActivity.this).saveString("id", Integer.toString(id));
+                    SharedPrefManager.getInstance(LoginActivity.this).saveString("email", email);
+                    String emailAfterLogin = SharedPrefManager.getInstance(LoginActivity.this).getString("email", "");
                     Log.d("responseapi", "Email after login" + emailAfterLogin);
-                String strId =   SharedPrefManager.getInstance(LoginActivity.this).getString("id","null");
+                    String strId = SharedPrefManager.getInstance(LoginActivity.this).getString("id", "null");
 //                    Log.d("responseapi", strId);
                 } else {
                     Log.d("responseapi", "Login fail");
@@ -110,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                             String errorBody = response.errorBody().string();
                             ApiResponse<Metadata> errorResponse = new Gson().fromJson(errorBody, ApiResponse.class);
                             Log.d("responseapi", "Parsed error response: " + errorResponse.toString());
-                            Toast.makeText(getApplicationContext(),errorResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("responseapi", "ErrorBody is null");
                         }
@@ -119,10 +122,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ApiResponse<Metadata>> call, Throwable t) {
                 t.printStackTrace();
-                Log.d("responseapi","Call Api lỗi");
+                Log.d("responseapi", "Call Api lỗi");
                 Toast.makeText(getApplicationContext(), "Call Api Lỗi", Toast.LENGTH_SHORT).show();
             }
         });
