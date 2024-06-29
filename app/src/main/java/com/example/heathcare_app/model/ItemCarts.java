@@ -5,12 +5,22 @@ public class ItemCarts {
     private String name;
     private float price;
     private int quantity;
+    private String urlImage;
 
-    public ItemCarts(String name, float price, int quantity,int id) {
+    public ItemCarts(String name, float price, int quantity,int id,String urlImage) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.id = id;
+        this.urlImage = urlImage;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
     public int getId() {
@@ -45,6 +55,7 @@ public class ItemCarts {
         this.quantity = quantity;
     }
 
+
     @Override
     public String toString() {
         return "ItemCarts{" +
@@ -52,6 +63,7 @@ public class ItemCarts {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", urlImage='" + urlImage + '\'' +
                 '}';
     }
 }

@@ -5,38 +5,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:elevation="4dp"
-    app:cardCornerRadius="8dp">
 
-    <LinearLayout
+    app:cardCornerRadius="15dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@color/balck_100"
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvProductPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giá: 0 VND"
-            android:textSize="16sp" />
-
+        <!-- Quantity Controls Section -->
         <LinearLayout
+            android:id="@+id/quantityControls"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp">
+
 
             <Button
                 android:id="@+id/btnDecrease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:textSize="20dp"
+                android:background="@drawable/rounded_button_white"
+                android:textColor="@color/black"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:textStyle="bold"
                 android:text="-" />
 
             <TextView
@@ -45,19 +46,86 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:gravity="center"
-                android:layout_marginHorizontal="10dp" />
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginVertical="4dp"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnIncrease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:background="@drawable/rounded_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:textStyle="bold"
                 android:text="+" />
-            <Button
-                android:id="@+id/btnRemove"
-                android:layout_marginLeft="30dp"
+        </LinearLayout>
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/itemProductImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/medicine1"
+            app:layout_constraintStart_toEndOf="@id/quantityControls"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Product Details -->
+        <LinearLayout
+            android:layout_marginStart="8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/itemProductImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnRemove"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xóa sản phẩm" />
+                android:text="Spaghetti"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$32.50"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp" />
+
+            <!-- Additional Information (like cheese and petty) -->
+
         </LinearLayout>
-    </LinearLayout>
+
+        <!-- Remove Button Section -->
+        <Button
+            android:id="@+id/btnRemove"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/trash"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="4dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
