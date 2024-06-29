@@ -4,6 +4,8 @@ public class Appointment {
     private Doctor doctor;
     private String startTime;
     private String endTime;
+    private String status;
+    private int id;
 
     // Constructors, getters, and setters
 
@@ -13,13 +15,46 @@ public class Appointment {
         this.endTime = endTime;
     }
 
+    public Appointment(Doctor doctor, String startTime, String endTime, String status) {
+        this.doctor = doctor;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
+    public Appointment(Doctor doctor, String startTime, String endTime, String status, int id) {
+        this.doctor = doctor;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
                 "doctor=" + doctor +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", status='" + status + '\'' +
+                ", id=" + id +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Doctor getDoctor() {
