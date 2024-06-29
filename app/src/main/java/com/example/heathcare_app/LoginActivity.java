@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("responseapi", "Email after login" + emailAfterLogin);
                     String strId = SharedPrefManager.getInstance(LoginActivity.this).getString("id", "null");
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
 //                    Log.d("responseapi", strId);
                 } else {
                     Log.d("responseapi", "Login fail");
