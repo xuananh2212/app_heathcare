@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@color/balck_100"
         android:padding="8dp">
-
         <!-- Quantity Controls Section -->
         <LinearLayout
             android:id="@+id/quantityControls"
@@ -25,8 +24,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="8dp">
-
-
             <Button
                 android:id="@+id/btnDecrease"
                 android:layout_width="30dp"
@@ -38,7 +35,7 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:textStyle="bold"
-                android:text="-" />
+                android:text="-"/>
 
             <TextView
                 android:id="@+id/tvQuantity"
@@ -126,6 +123,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>
