@@ -126,24 +126,18 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
             Log.d("responseapi", payload.toString());
             BodyUpdate bodyUpdate = new BodyUpdate(product.getId(), payload);
             Log.d("responseapi", bodyUpdate.toString());
+            Log.d("responseapi", "Value updateSuccess before call api: " + updateSucces);
             callApiUpdateItemOrderDetails(bodyUpdate);
-            Log.d("responseapi", "Value statusupdate: " + updateSucces);
+            Log.d("responseapi", "Value updateSuccess after call api: " + updateSucces);
             if (updateSucces) {
                 product.setQuantity(product.getQuantity() + 1);
                 holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
                 onQuantityChangeListener.onQuantityChanged();
             }
             updateSucces = false;
+            Log.d("responseapi", "Value updateSuccess after gan bang false: " + updateSucces);
         });
         holder.btnRemoveItem.setOnClickListener(v -> {
-//            String id = Integer.toString(product.getId());
-//            Log.d("responseapi", id);
-//            int idUser = Integer.parseInt(id);
-//            BodyDeleteCart bodyDeleteCart = new BodyDeleteCart((idUser));
-//            Log.d("responseapi",bodyDeleteCart.toString());
-//            callApiRemoveItem(idUser,bodyDeleteCart, position);
-//
-//            Log.d("responseapi", "call xong api");
             DialogRemoveItem.showDialog(holder.itemView.getContext(), "Are you sure you want to remove this item?", new DialogRemoveItem.OnRemoveListener() {
                 @Override
                 public void onRemove() {
@@ -211,6 +205,7 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("responseapi", response.body().toString());
                     updateSucces = true;
+                    Log.d("responseapi", "Value statusupdate after update = true call api: " + updateSucces);
                 } else {
                     Log.d("responseapi", "Cap nhat loi");
                     //updateSucces = false;
