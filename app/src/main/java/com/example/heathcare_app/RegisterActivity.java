@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String confirmpassword = textConfirmPassword.getText().toString();
 //                DataBase db = new DataBase(getApplicationContext(),"healthcare",null,1);
                 if (username.length() == 0 || email.length() == 0 || password.length() == 0 || confirmpassword.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Vui lòng điền đủ các trường!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 } else {
                     if (isValidEmail(email)) {
@@ -72,13 +72,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 User user = new User(username, password, email);
                                 callApiSignUp(user);
                             } else {
-                                Toast.makeText(getApplicationContext(), "Password must contain at least 8 character,having leter, digit and special character", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Mật khẩu phải ít nhất 8 kí tự bao gồm chữ cái, số, và kí tự đặc biệt", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Password and Confirm password didn't match", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Mật khẩu không trùng nhau", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Email is not in correct format", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Email không đúng định dạng", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),signupResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("responseapi", signupResponse.getMessage());
                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    finish();
                 } else {
 //                    ErrorSignupResponse errorSignupResponse = response.body();
                     Log.d("responseapi", "Register fail");
@@ -111,7 +112,11 @@ public class RegisterActivity extends AppCompatActivity {
                             String errorBody = response.errorBody().string();
                             ApiResponse<Metadata> errorResponse = new Gson().fromJson(errorBody, ApiResponse.class);
                             Log.d("responseapi", "Parsed error response: " + errorResponse.toString());
-                            Toast.makeText(getApplicationContext(),errorResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                            if(errorResponse.getStatus() == 403){
+                                Toast.makeText(getApplicationContext(),"Tài khoản đã sớm được đăng kí, vui lòng đăng nhập",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(),errorResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Log.d("responseapi", "ErrorBody is null");
                         }

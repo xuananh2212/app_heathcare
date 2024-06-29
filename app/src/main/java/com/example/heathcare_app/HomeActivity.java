@@ -48,7 +48,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPrefManager.getInstance(HomeActivity.this).removeKey("id");
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+//                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         });
         CardView cardOrderDetails = findViewById(R.id.cardOrderDetails);

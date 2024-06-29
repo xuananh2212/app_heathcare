@@ -40,7 +40,7 @@ public interface ApiService {
     String urlIpByDat = "http://192.168.0.3:3000/v1/api/";
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl(urlIpByTuanAnh)
+            .baseUrl(urlIpByDat)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
