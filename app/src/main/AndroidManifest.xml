@@ -9,14 +9,18 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Heathcare_app"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".model.DialogRemoveItem"
+            android:exported="false" />
+        <activity
             android:name=".OrderDetailsActivity"
+            android:parentActivityName=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".LabTestBookActivity"
@@ -38,8 +42,8 @@
             android:exported="false" />
         <activity
             android:name=".BuyMedicineActivity"
-            android:parentActivityName=".HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".BookAppointmentActivity"
             android:exported="false" />

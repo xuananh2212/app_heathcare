@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = textEmail.getText().toString();
                 String password = textPassword.getText().toString();
                 if (email.length() == 0 || password.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please fill All details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Vui lòng điền đủ các trường", Toast.LENGTH_SHORT).show();
                 } else {
                     User user = new User(password, email);
                     callApiLogin(user);
@@ -93,18 +93,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<Metadata>> call, Response<ApiResponse<Metadata>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Metadata> loginResponse = response.body();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    Log.d("responseapi", loginResponse.getMessage());
                     Metadata metadata = loginResponse.getData();
 //                    Log.d("responseapi", metadata.toString());
                     int id = metadata.getId();
                     String email = metadata.getEmail();
-                    Toast.makeText(getApplicationContext(), loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     SharedPrefManager.getInstance(LoginActivity.this).saveString("id", Integer.toString(id));
                     SharedPrefManager.getInstance(LoginActivity.this).saveString("email", email);
                     String emailAfterLogin = SharedPrefManager.getInstance(LoginActivity.this).getString("email", "");
                     Log.d("responseapi", "Email after login" + emailAfterLogin);
                     String strId = SharedPrefManager.getInstance(LoginActivity.this).getString("id", "null");
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    Log.d("responseapi", strId);
                 } else {
                     Log.d("responseapi", "Login fail");
@@ -113,7 +113,13 @@ public class LoginActivity extends AppCompatActivity {
                             String errorBody = response.errorBody().string();
                             ApiResponse<Metadata> errorResponse = new Gson().fromJson(errorBody, ApiResponse.class);
                             Log.d("responseapi", "Parsed error response: " + errorResponse.toString());
-                            Toast.makeText(getApplicationContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            if(errorResponse.getStatus() == 401){
+                                Toast.makeText(getApplicationContext(), "Sai mật khẩu vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                            } else if(errorResponse.getStatus() == 403) {
+                                Toast.makeText(getApplicationContext(), "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Log.d("responseapi", "ErrorBody is null");
                         }
