@@ -69,7 +69,7 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemCartsViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ItemCartsViewHolder holder, int position) {
         ItemCarts product = productList.get(position);
         holder.tvProductName.setText(product.getName());
 //        holder.tvProductPrice.setText("Giá: " + product.getPrice() + " VND");
@@ -126,9 +126,8 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
             Log.d("responseapi", payload.toString());
             BodyUpdate bodyUpdate = new BodyUpdate(product.getId(), payload);
             Log.d("responseapi", bodyUpdate.toString());
-            Log.d("responseapi", "Value updateSuccess before call api: " + updateSucces);
             callApiUpdateItemOrderDetails(bodyUpdate);
-            Log.d("responseapi", "Value updateSuccess after call api: " + updateSucces);
+            Log.d("responseapi", "Value statusupdate: " + updateSucces);
             if (updateSucces) {
                 product.setQuantity(product.getQuantity() + 1);
                 holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
