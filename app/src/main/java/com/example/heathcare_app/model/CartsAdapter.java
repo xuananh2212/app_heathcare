@@ -108,14 +108,27 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
                 Log.d("responseapi", payload.toString());
                 BodyUpdate bodyUpdate = new BodyUpdate(product.getId(), payload);
                 Log.d("responseapi", bodyUpdate.toString());
-                callApiUpdateItemOrderDetails(bodyUpdate);
-                Log.d("responseapi", "Value statusupdate: " + updateSucces);
-                if (updateSucces) {
-                    product.setQuantity(product.getQuantity() - 1);
-                    holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
-                    onQuantityChangeListener.onQuantityChanged();
-                }
-                updateSucces = false;
+//                callApiUpdateItemOrderDetails(bodyUpdate,);
+//                Log.d("responseapi", "Value statusupdate: " + updateSucces);
+//                if (updateSucces) {
+//                    product.setQuantity(product.getQuantity() - 1);
+//                    holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
+//                    onQuantityChangeListener.onQuantityChanged();
+//                }
+//                updateSucces = false;
+                callApiUpdateItemOrderDetails(bodyUpdate ,new ApiCallback(){
+                    public void onSuccess() {
+                        Log.d("responseapi", "Value statusupdate: " + getUpdateSucces());
+                        product.setQuantity(product.getQuantity() - 1);
+                        holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
+                        onQuantityChangeListener.onQuantityChanged();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // Handle failure case
+                    }
+                });
             }
         });
 
@@ -126,14 +139,26 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
             Log.d("responseapi", payload.toString());
             BodyUpdate bodyUpdate = new BodyUpdate(product.getId(), payload);
             Log.d("responseapi", bodyUpdate.toString());
-            callApiUpdateItemOrderDetails(bodyUpdate);
-            Log.d("responseapi", "Value statusupdate: " + updateSucces);
-            if (updateSucces) {
-                product.setQuantity(product.getQuantity() + 1);
-                holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
-                onQuantityChangeListener.onQuantityChanged();
-            }
-            updateSucces = false;
+            callApiUpdateItemOrderDetails(bodyUpdate ,new ApiCallback(){
+                public void onSuccess() {
+                    Log.d("responseapi", "Value statusupdate: " + getUpdateSucces());
+                    product.setQuantity(product.getQuantity() + 1);
+                    holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
+                    onQuantityChangeListener.onQuantityChanged();
+                }
+
+                @Override
+                public void onFailure() {
+                    // Handle failure case
+                }
+            });
+            Log.d("responseapi", "Value statusupdate: " + getUpdateSucces());
+//            if (getUpdateSucces()) {
+//                product.setQuantity(product.getQuantity() + 1);
+//                holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
+//                onQuantityChangeListener.onQuantityChanged();
+//            }
+            setUpdateSucces(false);
             Log.d("responseapi", "Value updateSuccess after gan bang false: " + updateSucces);
         });
         holder.btnRemoveItem.setOnClickListener(v -> {
@@ -194,7 +219,7 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
         super.unregisterAdapterDataObserver(observer);
     }
 
-    public void callApiUpdateItemOrderDetails(BodyUpdate<BodyUpdateCart> bodyUpdate) {
+    public void callApiUpdateItemOrderDetails(BodyUpdate<BodyUpdateCart> bodyUpdate,ApiCallback callback) {
         Call<ApiResponse<Object>> call = ApiService.apiService.handleUpdateItemOrderDetails(bodyUpdate);
         call.enqueue(new Callback<ApiResponse<Object>>() {
 
@@ -203,11 +228,18 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
                 Log.d("responseapi", "Vao goi api success");
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("responseapi", response.body().toString());
-                    updateSucces = true;
+//                    updateSucces = true;
+                    setUpdateSucces(true);
+                    // code them
+                    callback.onSuccess();
+                    // end
                     Log.d("responseapi", "Value statusupdate after update = true call api: " + updateSucces);
                 } else {
                     Log.d("responseapi", "Cap nhat loi");
                     //updateSucces = false;
+                    // code them
+                    callback.onFailure();
+                    // end
                 }
             }
 
@@ -228,8 +260,10 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
             public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("responseapi", response.body().toString());
-                    updateSucces = true;
+//                    updateSucces = true;
+                    setUpdateSucces(true);
                 } else {
+
                     // updateSucces = false;
                 }
             }
@@ -250,4 +284,18 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
     public int getItemCount() {
         return productList.size();
     }
+    // code them
+    public interface ApiCallback {
+        void onSuccess();
+        void onFailure();
+    }
+
+    private synchronized boolean getUpdateSucces() {
+        return updateSucces;
+    }
+
+    private synchronized void setUpdateSucces(boolean value) {
+        updateSucces = value;
+    }
+     // code them
 }
