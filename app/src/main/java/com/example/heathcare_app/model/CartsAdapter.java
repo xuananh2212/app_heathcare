@@ -1,5 +1,6 @@
 package com.example.heathcare_app.model;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,15 +69,18 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemCartsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemCartsViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ItemCarts product = productList.get(position);
         holder.tvProductName.setText(product.getName());
 //        holder.tvProductPrice.setText("Giá: " + product.getPrice() + " VND");
         holder.tvProductPrice.setText(String.format("Giá: %.2f VND", product.getPrice()));
         Log.d("responseapi",product.getUrlImage());
+<<<<<<< HEAD
 //        Glide.with(holder.itemView.getContext())
 //                .load(product.getUrlImage()) // Provide the image URL here
 //                .into(holder.imageView);
+=======
+>>>>>>> e6ee3a3300a5b14bc23f7c695e81be1b50ab9f6f
         holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
         String imageUrl = product.getUrlImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -97,6 +101,7 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
             } else {
                 Log.d("responseapi", "Context is null at position " + position);
             }
+<<<<<<< HEAD
             // Load the image using Glide
 //            Glide.with(holder.itemView.getContext())
 //                    .load(imageUrl)
@@ -104,6 +109,8 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
 //                            .placeholder(R.drawable.medicine1) // Set a placeholder image
 //                            .error(R.drawable.error))           // Set an error image if load fails
 //                    .into(holder.imageView);
+=======
+>>>>>>> e6ee3a3300a5b14bc23f7c695e81be1b50ab9f6f
         } else {
             Log.d("responseapi","url_img  k  ok");
             // Set a placeholder image if URL is null or empty
@@ -143,19 +150,28 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
                 onQuantityChangeListener.onQuantityChanged();
             }
             updateSucces = false;
-//            product.setQuantity(product.getQuantity() + 1);
-//            holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
-//            onQuantityChangeListener.onQuantityChanged();
         });
         holder.btnRemoveItem.setOnClickListener(v -> {
-            String id = Integer.toString(product.getId());
-            Log.d("responseapi", id);
-            int idUser = Integer.parseInt(id);
-            BodyDeleteCart bodyDeleteCart = new BodyDeleteCart((idUser));
-            Log.d("responseapi",bodyDeleteCart.toString());
-            callApiRemoveItem(idUser,bodyDeleteCart, position);
-
-            Log.d("responseapi", "call xong api");
+//            String id = Integer.toString(product.getId());
+//            Log.d("responseapi", id);
+//            int idUser = Integer.parseInt(id);
+//            BodyDeleteCart bodyDeleteCart = new BodyDeleteCart((idUser));
+//            Log.d("responseapi",bodyDeleteCart.toString());
+//            callApiRemoveItem(idUser,bodyDeleteCart, position);
+//
+//            Log.d("responseapi", "call xong api");
+            DialogRemoveItem.showDialog(holder.itemView.getContext(), "Are you sure you want to remove this item?", new DialogRemoveItem.OnRemoveListener() {
+                @Override
+                public void onRemove() {
+                    String id = Integer.toString(product.getId());
+                    Log.d("responseapi", id);
+                    int idUser = Integer.parseInt(id);
+                    BodyDeleteCart bodyDeleteCart = new BodyDeleteCart((idUser));
+                    Log.d("responseapi", bodyDeleteCart.toString());
+                    callApiRemoveItem(idUser, bodyDeleteCart, position);
+                    Log.d("responseapi", "call xong api");
+                }
+            });
         });
     }
 
