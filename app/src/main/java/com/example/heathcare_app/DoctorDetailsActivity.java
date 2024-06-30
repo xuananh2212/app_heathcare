@@ -23,9 +23,11 @@ import com.example.heathcare_app.model.ApiResponseDoctor;
 import com.example.heathcare_app.api.ApiService;
 import com.example.heathcare_app.model.Doctor;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +65,11 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         });
         callApiGetDoctors(id);
     }
+    public static String formatCurrency(double amount) {
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        return currencyFormatter.format(amount);
+    }
 
     private void callApiGetDoctors(String id) {
         ApiService.apiService.getListDoctors(Integer.valueOf(id)).enqueue(new Callback<ApiResponseDoctor>() {
@@ -78,7 +85,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                             details.put("address", "Điạ chỉ: " + doctor.getAddress());
                             details.put("experience", "Kinh nghiệm: " + doctor.getExp() + " năm");
                             details.put("phone", "SĐT: " + doctor.getPhone());
-                            details.put("price", String.valueOf(doctor.getPrice()) +"VND");
+                            details.put("price",formatCurrency(doctor.getPrice()));
                             details.put("image", doctor.getImage());
                             details.put("id", String.valueOf(doctor.getId()));
                             doctor_details.add(details);
