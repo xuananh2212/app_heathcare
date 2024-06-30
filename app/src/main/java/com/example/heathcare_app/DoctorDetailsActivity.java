@@ -74,11 +74,11 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                         doctors = apiResponse.getData().getDoctors();
                         for (Doctor doctor : doctors) {
                             HashMap<String, String> details = new HashMap<>();
-                            details.put("name", "Doctor Name: " + doctor.getName());
-                            details.put("address", "Hospital Address: " + doctor.getAddress());
-                            details.put("experience", "Exp: " + doctor.getExp() + " years");
-                            details.put("phone", "Mobile No: " + doctor.getPhone());
-                            details.put("price", String.valueOf(doctor.getPrice()));
+                            details.put("name", "Tên bác sĩ: " + doctor.getName());
+                            details.put("address", "Điạ chỉ: " + doctor.getAddress());
+                            details.put("experience", "Kinh nghiệm: " + doctor.getExp() + " năm");
+                            details.put("phone", "SĐT: " + doctor.getPhone());
+                            details.put("price", String.valueOf(doctor.getPrice()) +"VND");
                             details.put("image", doctor.getImage());
                             details.put("id", String.valueOf(doctor.getId()));
                             doctor_details.add(details);

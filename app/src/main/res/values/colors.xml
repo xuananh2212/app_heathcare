@@ -31,4 +31,5 @@
     <color name="link_register">#1e88e5</color>
     <color name="your_action_bar_color">#FF5722</color>
     <color name="template">#64dd17</color>
+    <color name="background_book_appointment">#0099FF</color>
 </resources>

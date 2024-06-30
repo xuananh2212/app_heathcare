@@ -62,7 +62,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         timeButtonEnd = findViewById(R.id.buttonAppTimeEnd);
         btnBook =findViewById(R.id.buttonBookAppointment);
         btnBack= findViewById(R.id.buttonAppBack);
-
+        btnBack.setOnClickListener(v -> finish());
 
         ed1.setKeyListener(null);
         ed2.setKeyListener(null);
@@ -79,7 +79,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         ed1.setText(fullname);
         ed2.setText(address);
         ed3.setText(contact);
-        ed4.setText("Cons Fees:" + fees + "/-");
+        ed4.setText(fees);
 
         // datePicker
         initDatePicker();
@@ -109,7 +109,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BookAppointmentActivity.this, FindDoctorActivity.class));
+                finish();
             }
         });
 
@@ -136,11 +136,6 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 } catch (java.text.ParseException e) {
                     throw new RuntimeException(e);
                 }
-//                catch (java.text.ParseException e) {
-//
-//                    throw new RuntimeException(e);
-//                }
-
 
             }
         });
