@@ -3,6 +3,7 @@ package com.example.heathcare_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 
 public class FindDoctorActivity extends AppCompatActivity {
 
@@ -23,6 +27,19 @@ public class FindDoctorActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ImageView familyPhysicianImageView = findViewById(R.id.familyPhysicianImageView);
+        ImageView dieticianImageView = findViewById(R.id.dieticianImageView);
+        ImageView dentistImageView = findViewById(R.id.dentistImageView);
+        ImageView surgeonImageView = findViewById(R.id.surgeonImageView);
+        ImageView cardiologistsImageView = findViewById(R.id.cardiologistsImageView);
+
+
+        Glide.with(this).load(R.drawable.family_physicians).transform(new CircleCrop()).into(familyPhysicianImageView);
+        Glide.with(this).load(R.drawable.dietician).transform(new CircleCrop()).into(dieticianImageView);
+        Glide.with(this).load(R.drawable.dentist).transform(new CircleCrop()).into(dentistImageView);
+        Glide.with(this).load(R.drawable.surgeon).transform(new CircleCrop()).into(surgeonImageView);
+        Glide.with(this).load(R.drawable.cardiologists).transform(new CircleCrop()).into(cardiologistsImageView);
+
         CardView exit = findViewById(R.id.cardFDBack);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
