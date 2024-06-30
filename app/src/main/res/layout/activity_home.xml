@@ -44,29 +44,31 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_gravity="center_vertical|center_horizontal"
-                 android:gravity="center"
-                 android:orientation="vertical">
-                 <ImageView
-                     android:padding="5dp"
-                     android:background="@drawable/radius"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:src="@drawable/home"/>
 
-                 <TextView
-                     android:layout_marginTop="5dp"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="Lịch hẹn"
-                     android:textAlignment="center"
-                     android:textColor="@color/text_home"
-                     android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
+                android:gravity="center"
+                android:orientation="vertical">
 
-             </LinearLayout>
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:padding="5dp"
+                    android:src="@drawable/medical_appointment" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Lịch hẹn"
+                    android:textAlignment="center"
+                    android:textColor="@color/balck_100"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBuyMedicine"
@@ -82,26 +84,28 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
+
             <LinearLayout
-                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
+
                 <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:padding="5dp"
-                    android:background="@drawable/radius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/language"/>
+                    android:src="@drawable/medicine" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mua thuốc"
                     android:textAlignment="center"
-                    android:textColor="@color/text_home"
+                    android:textColor="@color/balck_100"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -120,25 +124,27 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
-                    android:src="@drawable/chat"/>
+                    android:src="@drawable/deadline" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đặt lịch khám"
                     android:textAlignment="center"
-                    android:textColor="@color/text_home"
+                    android:textColor="@color/balck_100"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -157,25 +163,28 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:padding="5dp"
-                    android:background="@drawable/radius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/calendar"/>
+                    android:src="@drawable/blog" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bài viết về sức khỏe"
                     android:textAlignment="center"
-                    android:textColor="@color/text_home"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/balck_100"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -193,25 +202,28 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:padding="5dp"
-                    android:background="@drawable/radius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/widgets"/>
+                    android:src="@drawable/trolley" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giỏ hàng"
                     android:textAlignment="center"
-                    android:textColor="@color/text_home"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/balck_100"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -229,25 +241,28 @@
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#263898"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:padding="5dp"
-                    android:background="@drawable/radius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/info"/>
+                    android:src="@drawable/check_out" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đăng xuất"
                     android:textAlignment="center"
-                    android:textColor="@color/text_home"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/balck_100"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
