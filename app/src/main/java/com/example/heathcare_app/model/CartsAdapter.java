@@ -130,6 +130,9 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
                     }
                 });
             }
+            Log.d("responseapi", "Value statusupdate: " + getUpdateSucces());
+            setUpdateSucces(false);
+            Log.d("responseapi", "Value updateSuccess after gan bang false: " + updateSucces);
         });
 
         holder.btnIncrease.setOnClickListener(v -> {
