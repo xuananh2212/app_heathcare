@@ -24,6 +24,9 @@ import com.example.heathcare_app.model.Cart;
 import com.example.heathcare_app.model.CartResponse;
 import com.example.heathcare_app.model.SharedPrefManager;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,20 +49,26 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
 
         // Giả sử chúng ta nhận dữ liệu từ Intent
         Intent intent = getIntent();
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         int id = intent.getIntExtra("id", 1);
         String imageUrl = intent.getStringExtra("imageUrl");
         String title = intent.getStringExtra("title");
-        String oldPrice = intent.getStringExtra("oldPrice");
-        String newPrice = intent.getStringExtra("newPrice");
+//        String oldPrice = intent.getStringExtra("oldPrice");
+//        String newPrice = intent.getStringExtra("newPrice");
+        float oldPrice = intent.getFloatExtra("oldPrice",0.0f);
+        float newPrice = intent.getFloatExtra("newPrice", 0.0f);
+        String formattedOldPrice = vndFormat.format(oldPrice);
+        String formattedNewPrice = vndFormat.format(newPrice);
         String desc = intent.getStringExtra("desc");
         String idUser =   SharedPrefManager.getInstance(BuyMedicineBookActivity.this).getString("id","null");
         Glide.with(this).load(imageUrl).into(productImage);
         productTitle.setText(title);
-        productOldPrice.setText(oldPrice);
-        productNewPrice.setText(newPrice);
+        productOldPrice.setText(formattedOldPrice);
+        productNewPrice.setText(formattedNewPrice);
         productDescription.setText(desc);
         productOldPrice.setPaintFlags(productOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        buyButton.setOnClickListener(v -> showQuantityPickerDialog(Integer.parseInt(idUser), id, Double.parseDouble(oldPrice), Double.parseDouble(newPrice), title, desc, imageUrl));
+//        Double.parseDouble(oldPrice)
+        buyButton.setOnClickListener(v -> showQuantityPickerDialog(Integer.parseInt(idUser), id, oldPrice, newPrice, title, desc, imageUrl));
     }
     private void showQuantityPickerDialog(int idUser, int productId, double oldPrice, double newPrice, String name,String description,String image) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

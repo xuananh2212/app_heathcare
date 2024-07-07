@@ -36,13 +36,12 @@ import retrofit2.http.Query;
 
 
 public interface ApiService {
-    String urlIpByTuanAnh = "http://192.168.1.69:3000/v1/api/";
+//    String urlIpByTuanAnh = "http://192.168.1.69:3000/v1/api/";
     String urlIpByDat = "http://192.168.0.3:3000/v1/api/";
 //    String urlIpByDat = "http://172.16.25.75:3000/v1/api/";
-
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl(urlIpByTuanAnh)
+            .baseUrl(urlIpByDat)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);

@@ -21,7 +21,9 @@ import com.example.heathcare_app.api.ApiService;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +75,12 @@ public class CartsAdapter extends RecyclerView.Adapter<CartsAdapter.ItemCartsVie
         ItemCarts product = productList.get(position);
         holder.tvProductName.setText(product.getName());
 //        holder.tvProductPrice.setText("Giá: " + product.getPrice() + " VND");
-        holder.tvProductPrice.setText(String.format("Giá: %.2f VND", product.getPrice()));
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        float price = (float) product.getPrice();
+        String formattedPrice = vndFormat.format(price);
+        // Định dạng giá trị price sang VND
+//        holder.tvProductPrice.setText(String.format("Giá: %.2f VND", product.getPrice()));
+        holder.tvProductPrice.setText(formattedPrice);
         Log.d("responseapi",product.getUrlImage());
         holder.tvQuantity.setText(String.valueOf(product.getQuantity()));
         String imageUrl = product.getUrlImage();

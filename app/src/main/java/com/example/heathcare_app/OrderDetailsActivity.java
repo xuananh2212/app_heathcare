@@ -31,10 +31,12 @@ import com.example.heathcare_app.model.DataCarts.*;
 import com.example.heathcare_app.model.ItemCarts;
 import com.example.heathcare_app.model.SharedPrefManager;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,10 +110,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                         int id = carts.getId();
                         listIdItem.add(id);
-                        String name = carts.getMedicine().getName();
-                        String img = carts.getMedicine().getImage();
+                        String name = carts.getName();
+                        String img = carts.getImage();
                         Log.d("responseapi",img);
-                        float price = (float) carts.getNewPrice();
+                        float price = (float) carts.getNew_price();
+                        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+                        // Định dạng giá trị price sang VND
+                        String formattedPrice = vndFormat.format(price);
                         int quantity = carts.getQuantity();
                         ItemCarts itemCart = new ItemCarts(name, price, quantity, id,img);
                         Log.d("responseapi",itemCart.toString());
@@ -161,7 +167,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
         for (ItemCarts itemCarts : itemCartsList) {
             total += itemCarts.getPrice() * itemCarts.getQuantity();
         }
-        tvTotal.setText("Tổng: " + total + " VND");
+        // Tạo một instance của NumberFormat cho định dạng tiền tệ Việt Nam Đồng
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+        // Định dạng giá trị price sang VND
+        String formattedPrice = vndFormat.format(total);
+        tvTotal.setText("Tổng: " + formattedPrice);
     }
 
 }

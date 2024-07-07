@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.heathcare_app.model.Medicine;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
@@ -37,18 +39,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         Medicine product = productList.get(position);
+        float priceNew = (float) product.getNewPrice();
+        float priceOld = (float) product.getOldPrice();
         holder.titleProduct.setText(product.getName());
-        holder.oldPrice.setText(product.getOldPrice() + "đ");
-        holder.txtPrice.setText(product.getNewPrice() + "đ");
+        holder.oldPrice.setText(vndFormat.format(priceOld));
+        holder.txtPrice.setText(vndFormat.format(priceNew));
+//        holder.oldPrice.setText(product.getOldPrice() + "đ");
+//        holder.txtPrice.setText(product.getNewPrice() + "đ");
         Glide.with(context).load(product.getImage()).into(holder.imageView);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, BuyMedicineBookActivity.class);
             intent.putExtra("id", product.getId());
             intent.putExtra("imageUrl", product.getImage());
             intent.putExtra("title", product.getName());
-            intent.putExtra("oldPrice", product.getOldPrice() + "");
-            intent.putExtra("newPrice", product.getNewPrice() + "");
+//            intent.putExtra("oldPrice", vndFormat.format(priceOld));
+//            intent.putExtra("newPrice", vndFormat.format(priceNew));
+            intent.putExtra("oldPrice", priceOld);
+            intent.putExtra("newPrice", priceNew );
             intent.putExtra("desc", product.getDescription());
             context.startActivity(intent);
         });
