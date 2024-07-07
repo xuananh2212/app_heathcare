@@ -7,6 +7,9 @@ public class Cart {
     private int productId;
     @SerializedName("user_id")
     private int userId;
+    private String name;
+    private String description;
+    private String image;
     private int quantity;
     @SerializedName("old_price")
     private double oldPrice;
@@ -14,9 +17,12 @@ public class Cart {
     private double newPrice;
     private String status;
 
-    public Cart(int productId, int userId, int quantity, double oldPrice, double newPrice, String status) {
+    public Cart(int productId, int userId, String name, String description, String image, int quantity, double oldPrice, double newPrice, String status) {
         this.productId = productId;
         this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
         this.quantity = quantity;
         this.oldPrice = oldPrice;
         this.newPrice = newPrice;

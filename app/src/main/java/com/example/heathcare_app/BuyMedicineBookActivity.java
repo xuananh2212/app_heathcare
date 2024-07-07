@@ -59,9 +59,9 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         productNewPrice.setText(newPrice);
         productDescription.setText(desc);
         productOldPrice.setPaintFlags(productOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        buyButton.setOnClickListener(v -> showQuantityPickerDialog(Integer.parseInt(idUser), id, Double.parseDouble(oldPrice), Double.parseDouble(newPrice)));
+        buyButton.setOnClickListener(v -> showQuantityPickerDialog(Integer.parseInt(idUser), id, Double.parseDouble(oldPrice), Double.parseDouble(newPrice), title, desc, imageUrl));
     }
-    private void showQuantityPickerDialog(int idUser, int productId, double oldPrice, double newPrice) {
+    private void showQuantityPickerDialog(int idUser, int productId, double oldPrice, double newPrice, String name,String description,String image) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chọn số lượng");
 
@@ -76,7 +76,7 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Xác nhận", (dialog, which) -> {
             int quantity = numberPicker.getValue();
-            Cart cart = new Cart(productId,idUser,quantity, oldPrice, newPrice, "pending");
+            Cart cart = new Cart(productId,idUser,name, description, image,quantity, oldPrice, newPrice, "pending");
             callApiCreateOrder(cart);
         });
 
