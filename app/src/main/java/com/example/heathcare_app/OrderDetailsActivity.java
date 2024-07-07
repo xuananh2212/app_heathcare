@@ -1,5 +1,6 @@
 package com.example.heathcare_app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.example.heathcare_app.model.BodyUpdateCart;
 import com.example.heathcare_app.model.BodyUpdateStatusCart;
 import com.example.heathcare_app.model.Carts;
 import com.example.heathcare_app.model.CartsAdapter;
+import com.example.heathcare_app.model.CartsAdapterPayed;
 import com.example.heathcare_app.model.DataCarts;
 import com.example.heathcare_app.model.DataCarts.*;
 import com.example.heathcare_app.model.ItemCarts;
@@ -48,7 +51,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private List<ItemCarts> itemCartsList;
     private List<Integer> listIdItem;
     private CartsAdapter cartsAdapter;
+    private CartsAdapterPayed cartsAdapterPayed;
+    //
+    private Spinner spinnerStatus;
+    //
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,31 +67,83 @@ public class OrderDetailsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
-        String status = "pending";
-        callApiGetOrderDetails(strId, status);
-        tvTotal = findViewById(R.id.tvTotal);
-        Button btnCheckout = findViewById(R.id.btnCheckout);
-        listIdItem = new ArrayList<>();
-        itemCartsList = new ArrayList<>();
-//        cartsAdapter = new CartsAdapter(itemCartsList, this::updateTotal);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(cartsAdapter);
-        btnCheckout.setOnClickListener(v -> {
-//            Log.d("responseapi", strListItem);
-            Toast.makeText(OrderDetailsActivity.this, "Đã thanh toán " + tvTotal.getText(), Toast.LENGTH_SHORT).show();
-            // Xử lý sự kiện khi nhấn nút Thanh toán
-            String strListItem = listIdItem.toString();
-            for (Integer id : listIdItem) {
-                BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("done");
-                BodyUpdate<BodyUpdateStatusCart> bodyUpdate = new BodyUpdate(id, bodyUpdateStatusCart);
-                Log.d("responseapi", bodyUpdate.toString());
-                callApiUpdateItemOrderDetails(bodyUpdate);
+        //
+        spinnerStatus = findViewById(R.id.spinnerStatus);
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedStatus = parent.getItemAtPosition(position).toString();
+                // Handle selected status (pending or done)
+                if (selectedStatus.equals("Chờ thanh toán")) {
+                    // Handle pending status
+                    // Call API or perform actions related to pending status
+                    String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
+                    String status = "pending";
+                    callApiGetOrderDetails(strId, status);
+                    tvTotal = findViewById(R.id.tvTotal);
+                    Button btnCheckout = findViewById(R.id.btnCheckout);
+                    btnCheckout.setEnabled(true);
+                    listIdItem = new ArrayList<>();
+                    itemCartsList = new ArrayList<>();
+                    btnCheckout.setOnClickListener(v -> {
+                        Toast.makeText(OrderDetailsActivity.this, "Đã thanh toán " + tvTotal.getText(), Toast.LENGTH_SHORT).show();
+                        // Xử lý sự kiện khi nhấn nút Thanh toán
+                        String strListItem = listIdItem.toString();
+                        for (Integer id1 : listIdItem) {
+                            BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("done");
+                            BodyUpdate<BodyUpdateStatusCart> bodyUpdate = new BodyUpdate(id1, bodyUpdateStatusCart);
+                            Log.d("responseapi", bodyUpdate.toString());
+                            callApiUpdateItemOrderDetails(bodyUpdate);
+                        }
+                        itemCartsList.clear();
+                        cartsAdapter.notifyDataSetChanged(); // Notify adapter of changes
+                        updateTotal();
+                    });
+                } else if (selectedStatus.equals("Đã thanh toán")) {
+                    // Handle done status
+                    // Call API or perform actions related to done status
+                    String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
+                    String status = "done";
+                    callApiGetOrderDetailsPayed(strId, status);
+                    tvTotal = findViewById(R.id.tvTotal);
+                    Button btnCheckout = findViewById(R.id.btnCheckout);
+                    btnCheckout.setEnabled(false);
+                    listIdItem = new ArrayList<>();
+                    itemCartsList = new ArrayList<>();
+                }
             }
-            itemCartsList.clear();
-            cartsAdapter.notifyDataSetChanged(); // Notify adapter of changes
-            updateTotal();
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle no item selected
+            }
         });
+//
+//        String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
+//        String status = "pending";
+//        callApiGetOrderDetails(strId, status);
+//        tvTotal = findViewById(R.id.tvTotal);
+//        Button btnCheckout = findViewById(R.id.btnCheckout);
+//        listIdItem = new ArrayList<>();
+//        itemCartsList = new ArrayList<>();
+////        cartsAdapter = new CartsAdapter(itemCartsList, this::updateTotal);
+////        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+////        recyclerView.setAdapter(cartsAdapter);
+//        btnCheckout.setOnClickListener(v -> {
+////            Log.d("responseapi", strListItem);
+//            Toast.makeText(OrderDetailsActivity.this, "Đã thanh toán " + tvTotal.getText(), Toast.LENGTH_SHORT).show();
+//            // Xử lý sự kiện khi nhấn nút Thanh toán
+//            String strListItem = listIdItem.toString();
+//            for (Integer id : listIdItem) {
+//                BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("done");
+//                BodyUpdate<BodyUpdateStatusCart> bodyUpdate = new BodyUpdate(id, bodyUpdateStatusCart);
+//                Log.d("responseapi", bodyUpdate.toString());
+//                callApiUpdateItemOrderDetails(bodyUpdate);
+//            }
+//            itemCartsList.clear();
+//            cartsAdapter.notifyDataSetChanged(); // Notify adapter of changes
+//            updateTotal();
+//        });
 //        updateTotal();
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +152,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 startActivity(new Intent(OrderDetailsActivity.this, HomeActivity.class));
             }
         });
-
-
     }
 
     private void callApiGetOrderDetails(String id, String status) {
@@ -104,8 +162,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<DataCarts> responseOrderDetails = response.body();
                     Log.d("responseapi", responseOrderDetails.getMessage());
-
-
                     for (Carts carts : responseOrderDetails.getData().getCarts()) {
 
                         int id = carts.getId();
@@ -128,6 +184,47 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     cartsAdapter = new CartsAdapter(itemCartsList, OrderDetailsActivity.this::updateTotal, listIdItem);
 //                    cartsAdapter = new CartsAdapter(itemCartsList, OrderDetailsActivity.this);
                     recyclerView.setAdapter(cartsAdapter);
+                    updateTotal();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<DataCarts>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callApiGetOrderDetailsPayed(String id, String status) {
+        Call<ApiResponse<DataCarts>> call = ApiService.apiService.handleGetOrderDetails(Integer.valueOf(id), status);
+        call.enqueue(new Callback<ApiResponse<DataCarts>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<DataCarts>> call, Response<ApiResponse<DataCarts>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<DataCarts> responseOrderDetails = response.body();
+                    Log.d("responseapi", responseOrderDetails.getMessage());
+                    for (Carts carts : responseOrderDetails.getData().getCarts()) {
+
+                        int id = carts.getId();
+                        listIdItem.add(id);
+                        String name = carts.getName();
+                        String img = carts.getImage();
+                        Log.d("responseapi",img);
+                        float price = (float) carts.getNew_price();
+                        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+                        // Định dạng giá trị price sang VND
+                        String formattedPrice = vndFormat.format(price);
+                        int quantity = carts.getQuantity();
+                        ItemCarts itemCart = new ItemCarts(name, price, quantity, id,img);
+                        Log.d("responseapi",itemCart.toString());
+                        itemCartsList.add(itemCart);
+                    }
+                    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(OrderDetailsActivity.this));
+                    cartsAdapterPayed = new CartsAdapterPayed(itemCartsList, OrderDetailsActivity.this::updateTotal, listIdItem);
+//                    cartsAdapter = new CartsAdapter(itemCartsList, OrderDetailsActivity.this);
+                    recyclerView.setAdapter(cartsAdapterPayed);
                     updateTotal();
                 }
             }

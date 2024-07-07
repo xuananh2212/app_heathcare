@@ -34,6 +34,13 @@
         android:layout_marginEnd="10dp"
         android:gravity="center"
  />
+        <Spinner
+            android:id="@+id/spinnerStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/status_options"
+            android:prompt="@string/select_status"
+            android:layout_marginEnd="10dp"  />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
