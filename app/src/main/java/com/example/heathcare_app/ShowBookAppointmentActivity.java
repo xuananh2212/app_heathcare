@@ -30,6 +30,7 @@ import com.example.heathcare_app.model.Appointment;
 import com.example.heathcare_app.model.Doctor;
 import com.example.heathcare_app.model.SharedPrefManager;
 
+import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,6 +38,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,13 +76,20 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
         switch (status) {
             case "pending":
                 return "Đang xử lý";
+            case "confirmed":
+                return "Thành công";
             case "accepted":
-                return "Đã được chấp nhận";
+                return "Đã đặt";
             case "rejected":
-                return "Đã hủy";
+                return "Hủy bỏ";
             default:
                 return "Đang xử lý";
         }
+    }
+    public static String formatCurrency(double amount) {
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        return currencyFormatter.format(amount);
     }
 
     private void callApiGetBookAppoint(String id) {
@@ -100,7 +109,7 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
                             details.put("address", "Địa chỉ: " + appointment.getDoctor().getAddress());
                             details.put("experience", "Kinh nghiệm: " + appointment.getDoctor().getExp() + " years");
                             details.put("phone", "SĐT: " + appointment.getDoctor().getPhone());
-                            details.put("price", "Giá (1h): " + String.valueOf(appointment.getDoctor().getPrice()));
+                            details.put("price", "Giá (1h): " + formatCurrency(appointment.getDoctor().getPrice()));
                             details.put("image", appointment.getDoctor().getImage());
                             Instant instant = Instant.parse(appointment.getStartTime());
                             LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.of("Asia/Bangkok"));
