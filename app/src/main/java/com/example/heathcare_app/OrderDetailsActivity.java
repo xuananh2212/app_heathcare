@@ -83,6 +83,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     tvTotal = findViewById(R.id.tvTotal);
                     Button btnCheckout = findViewById(R.id.btnCheckout);
                     btnCheckout.setEnabled(true);
+                    btnCheckout.setVisibility(View.VISIBLE);
                     listIdItem = new ArrayList<>();
                     itemCartsList = new ArrayList<>();
                     btnCheckout.setOnClickListener(v -> {
@@ -90,7 +91,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         // Xử lý sự kiện khi nhấn nút Thanh toán
                         String strListItem = listIdItem.toString();
                         for (Integer id1 : listIdItem) {
-                            BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("done");
+                            BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("confirm");
                             BodyUpdate<BodyUpdateStatusCart> bodyUpdate = new BodyUpdate(id1, bodyUpdateStatusCart);
                             Log.d("responseapi", bodyUpdate.toString());
                             callApiUpdateItemOrderDetails(bodyUpdate);
@@ -99,15 +100,27 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         cartsAdapter.notifyDataSetChanged(); // Notify adapter of changes
                         updateTotal();
                     });
-                } else if (selectedStatus.equals("Đã thanh toán")) {
+                } else if (selectedStatus.equals("Chờ xác nhận")) {
                     // Handle done status
                     // Call API or perform actions related to done status
+                    String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
+                    String status = "confirm";
+                    callApiGetOrderDetailsPayed(strId, status);
+                    tvTotal = findViewById(R.id.tvTotal);
+                    Button btnCheckout = findViewById(R.id.btnCheckout);
+                    btnCheckout.setEnabled(false);
+                    btnCheckout.setVisibility(View.INVISIBLE);
+                    listIdItem = new ArrayList<>();
+                    itemCartsList = new ArrayList<>();
+                }
+                else if(selectedStatus.equals("Đã thanh toán")){
                     String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
                     String status = "done";
                     callApiGetOrderDetailsPayed(strId, status);
                     tvTotal = findViewById(R.id.tvTotal);
                     Button btnCheckout = findViewById(R.id.btnCheckout);
                     btnCheckout.setEnabled(false);
+                    btnCheckout.setVisibility(View.INVISIBLE);
                     listIdItem = new ArrayList<>();
                     itemCartsList = new ArrayList<>();
                 }

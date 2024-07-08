@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#69f0ae"/> <!-- Example color: Pink -->
+    <solid android:color="#263898"/> <!-- Example color: Pink -->
 
     <!-- Rounded corners -->
     <corners android:radius="28dp"/> <!-- Adjust the radius as needed -->

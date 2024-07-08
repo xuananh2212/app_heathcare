@@ -1,6 +1,7 @@
 <resources>
     <string-array name="status_options">
         <item>Chờ thanh toán</item>
+        <item>Chờ xác nhận</item>
         <item>Đã thanh toán</item>
     </string-array>
 </resources>
