@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_book_appointment"
+    android:background="#263898"
     tools:context=".BookAppointmentActivity">
 
     <EditText
@@ -147,6 +147,7 @@
         android:background="@drawable/left_arrow_svgrepo_com"
         android:gravity="center"
         android:textStyle="bold"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
