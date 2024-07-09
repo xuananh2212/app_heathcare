@@ -102,7 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
 //                    Log.e("responseapi", "onResponse: " + signupResponse);
                     Toast.makeText(getApplicationContext(),signupResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("responseapi", signupResponse.getMessage());
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 } else {
 //                    ErrorSignupResponse errorSignupResponse = response.body();
