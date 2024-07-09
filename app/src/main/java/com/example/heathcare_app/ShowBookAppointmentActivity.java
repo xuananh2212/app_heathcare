@@ -81,7 +81,7 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
             case "accepted":
                 return "Đã đặt";
             case "rejected":
-                return "Hủy bỏ";
+                return "Đã huỷ";
             default:
                 return "Đang xử lý";
         }
@@ -159,7 +159,6 @@ public class ShowBookAppointmentActivity extends AppCompatActivity {
     private void cancelAppointment(int appointmentId, Button cancelButton) {
         HashMap<String, String> body = new HashMap<>();
         body.put("status", "rejected");
-
         ApiService.apiService.handlePatchBookAppointments(appointmentId, body).enqueue(new Callback<ApiResponsePatchBookAppointment>() {
             @Override
             public void onResponse(Call<ApiResponsePatchBookAppointment> call, Response<ApiResponsePatchBookAppointment> response) {

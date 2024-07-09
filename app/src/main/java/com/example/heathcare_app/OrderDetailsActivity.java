@@ -131,33 +131,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 // Handle no item selected
             }
         });
-//
-//        String strId = SharedPrefManager.getInstance(OrderDetailsActivity.this).getString("id", "null");
-//        String status = "pending";
-//        callApiGetOrderDetails(strId, status);
-//        tvTotal = findViewById(R.id.tvTotal);
-//        Button btnCheckout = findViewById(R.id.btnCheckout);
-//        listIdItem = new ArrayList<>();
-//        itemCartsList = new ArrayList<>();
-////        cartsAdapter = new CartsAdapter(itemCartsList, this::updateTotal);
-////        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-////        recyclerView.setAdapter(cartsAdapter);
-//        btnCheckout.setOnClickListener(v -> {
-////            Log.d("responseapi", strListItem);
-//            Toast.makeText(OrderDetailsActivity.this, "Đã thanh toán " + tvTotal.getText(), Toast.LENGTH_SHORT).show();
-//            // Xử lý sự kiện khi nhấn nút Thanh toán
-//            String strListItem = listIdItem.toString();
-//            for (Integer id : listIdItem) {
-//                BodyUpdateStatusCart bodyUpdateStatusCart = new BodyUpdateStatusCart("done");
-//                BodyUpdate<BodyUpdateStatusCart> bodyUpdate = new BodyUpdate(id, bodyUpdateStatusCart);
-//                Log.d("responseapi", bodyUpdate.toString());
-//                callApiUpdateItemOrderDetails(bodyUpdate);
-//            }
-//            itemCartsList.clear();
-//            cartsAdapter.notifyDataSetChanged(); // Notify adapter of changes
-//            updateTotal();
-//        });
-//        updateTotal();
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

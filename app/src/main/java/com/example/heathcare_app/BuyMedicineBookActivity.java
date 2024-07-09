@@ -46,8 +46,6 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         productNewPrice = findViewById(R.id.productNewPrice);
         productDescription = findViewById(R.id.productDescription);
         buyButton = findViewById(R.id.buyButton);
-
-        // Giả sử chúng ta nhận dữ liệu từ Intent
         Intent intent = getIntent();
         NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         int id = intent.getIntExtra("id", 1);
